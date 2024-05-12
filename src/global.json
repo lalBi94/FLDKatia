@@ -1,5 +1,5 @@
 {
-    "api": "http://127.0.0.1:1212",
+    "api": "https://sldkatia-api.osc-fr1.scalingo.io/",
     "local": "http://127.0.0.1:1212",
-    "pub": "https://secret-plateau-64680-087c79c152f9.herokuapp.com"
+    "pub": "https://sldkatia-api.osc-fr1.scalingo.io/"
 }
