@@ -33,7 +33,7 @@
   "scripts": {
     "client": "vite --host",
     "build": "vite build",
-    "deploy": "git add . && git commit -m $ && git push"
+    "deploy_client": "git add . && git commit -m \"[ASKING AUTO-DEPLOY]\" && git push"
   },
   "dependencies": {
     "@ramonak/react-progress-bar": "^5.1.1",
