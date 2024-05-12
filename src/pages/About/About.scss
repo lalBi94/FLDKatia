@@ -1,0 +1,64 @@
+@import "../../main.scss";
+
+#about-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    gap: 10px;
+
+    @media (max-width: 1200px) {
+        flex-direction: column;
+    }
+
+    #map-container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        height: 100%;
+
+        #map-title {
+            text-align: center;
+        }
+
+        #map-google-address {
+            text-align: center;
+        }
+
+        .mapouter {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            div {
+                width: 500px;
+                height: 500px;
+
+                a {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    #contact-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        #contact-title {
+        }
+
+        #contact-list {
+            display: flex;
+            flex-direction: column;
+
+            .contact-el {
+            }
+        }
+    }
+}

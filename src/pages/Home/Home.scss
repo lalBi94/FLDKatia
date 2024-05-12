@@ -1,0 +1,125 @@
+@import "../../main.scss";
+
+#home-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .brand {
+        background: $pastel_pink;
+        color: $black;
+        padding: 5px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .atouts {
+        background: $pastel_orange;
+        color: $black;
+        padding: 5px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .work {
+        background: $pastel_lime;
+        color: $black;
+        padding: 5px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    #main-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        #title {
+            text-align: center;
+        }
+
+        #banner-img {
+            width: 60%;
+            justify-self: center;
+            align-self: center;
+        }
+    }
+
+    #bottom-side {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 100%;
+        margin-bottom: 50px;
+
+        #process-container {
+            width: 50%;
+
+            #process-title {
+                text-align: center;
+            }
+
+            #textpro-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                p {
+                    width: 60%;
+                }
+            }
+
+            @media (max-width: 990px) {
+                width: auto;
+            }
+        }
+
+        #atouts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 50%;
+
+            @media (max-width: 990px) {
+                width: auto;
+            }
+
+            #atouts-title {
+                text-align: center;
+            }
+
+            #labels-container {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                justify-content: space-evenly;
+                flex-wrap: wrap;
+                gap: 20px;
+
+                .label {
+                    display: flex;
+                    align-content: center;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    .logo-container {
+                        display: flex;
+                        flex-direction: center;
+                        justify-content: center;
+                        .logo {
+                            width: 150px;
+                            height: 150px;
+                            border-radius: 50%;
+                        }
+                    }
+
+                    .text {
+                        width: 200px;
+                    }
+                }
+            }
+        }
+    }
+}

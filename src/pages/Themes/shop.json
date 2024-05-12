@@ -1,0 +1,22 @@
+{
+    "token": {
+        "Button": {
+            "borderRadius": 8,
+            "colorBgContainer": "#ff885e",
+            "colorBorder": "#5555",
+            "colorPrimaryHover": "#000",
+            "defaultHoverBg": "#fdeb79",
+            "defaultHoverBorderColor": "#777",
+            "activeBorderColor": "#ff885e"
+        },
+        "Input": {
+            "borderRadius": 8,
+            "colorBgContainer": "#fff",
+            "colorBorder": "#5555",
+            "colorPrimaryHover": "#fff",
+            "hoverBorderColor": "#777",
+            "defaultHoverBorderColor": "#0000",
+            "activeBorderColor": "#ff885e"
+        }
+    }
+}

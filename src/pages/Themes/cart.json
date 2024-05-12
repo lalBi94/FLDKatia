@@ -1,0 +1,12 @@
+{
+    "token": {
+        "Button": {
+            "borderRadius": 8,
+            "colorBgContainer": "#cedbfe",
+            "colorBorder": "#5555",
+            "colorPrimaryHover": "#000",
+            "defaultHoverBg": "#fecfef",
+            "defaultHoverBorderColor": "#777"
+        }
+    }
+}
