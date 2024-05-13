@@ -17,6 +17,7 @@ export default function Checkout() {
 
         const toSend = JSON.stringify({
             token: localStorage.getItem("katiacm"),
+            code: search,
         });
 
         cipherRequest(toSend, `${global.api}/reservation/getRFromCode`).then(
