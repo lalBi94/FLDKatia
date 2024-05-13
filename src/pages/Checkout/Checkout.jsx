@@ -19,7 +19,8 @@ export default function Checkout() {
 
         cipherRequest(toSend, `${global.api}/customer/getInfoBy`).then(
             (res) => {
-                console.log(res);
+                setReservation({ ...reservation, user_data: res.data });
+                console.log({ ...reservation, user_data: res.data });
             }
         );
 
