@@ -114,6 +114,9 @@ export default function Gate() {
      * @return {void}
      */
     const handleRegisterSubmit = () => {
+        setLockDown(true);
+        setLoader(true);
+
         if (
             firstname.length === 0 ||
             lastname.length === 0 ||
@@ -128,11 +131,15 @@ export default function Gate() {
                 1,
                 "topLeft"
             );
+            setLoader(false);
+            setLockDown(false);
             return;
         }
 
         if (!/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/.test(email)) {
             openNotif("Inscription", "Email invalide", 1, "topLeft");
+            setLoader(false);
+            setLockDown(false);
             return;
         }
 
@@ -143,6 +150,8 @@ export default function Gate() {
                 1,
                 "topLeft"
             );
+            setLoader(false);
+            setLockDown(false);
             return;
         }
 
@@ -153,11 +162,10 @@ export default function Gate() {
                 1,
                 "topLeft"
             );
+            setLoader(false);
+            setLockDown(false);
             return;
         }
-
-        setLockDown(true);
-        setLoader(true);
 
         const hash = SHA512(password).toString();
         const toSend = JSON.stringify({
@@ -196,6 +204,9 @@ export default function Gate() {
      * @return {void}
      */
     const handleLoginSubmit = () => {
+        setLockDown(true);
+        setLoader(true);
+
         if (email.length === 0 || password.length === 0) {
             openNotif(
                 "Connexion",
@@ -205,9 +216,6 @@ export default function Gate() {
             );
             return;
         }
-
-        setLockDown(true);
-        setLoader(true);
 
         const hash = SHA512(password).toString();
         const toSend = JSON.stringify({ email, password: hash });
@@ -228,9 +236,6 @@ export default function Gate() {
             setLoader(false);
             setLockDown(false);
         });
-
-        setLoader(false);
-        setLockDown(false);
     };
 
     return (
@@ -268,27 +273,8 @@ export default function Gate() {
                                 disabled={lockDown}
                             />
 
-                            {loader ? (
-                                <Vortex
-                                    visible={true}
-                                    height="100"
-                                    width="100"
-                                    radius={1}
-                                    ariaLabel="vortex-loading"
-                                    wrapperStyle={{}}
-                                    wrapperClass="vortex-wrapper"
-                                    colors={[
-                                        "#cedbfe",
-                                        "#fecfef",
-                                        "#d5ffcf",
-                                        "#cbfff3",
-                                        "#cedbfe",
-                                        "#d5ffcf",
-                                    ]}
-                                />
-                            ) : null}
-
                             <Button
+                                loading={loader}
                                 onClick={handleLoginSubmit}
                                 className="login-btn"
                                 disabled={lockDown}
@@ -347,27 +333,8 @@ export default function Gate() {
                                 </a>
                             </Checkbox>
 
-                            {loader ? (
-                                <Vortex
-                                    visible={true}
-                                    height="100"
-                                    width="100"
-                                    radius={1}
-                                    ariaLabel="vortex-loading"
-                                    wrapperStyle={{}}
-                                    wrapperClass="vortex-wrapper"
-                                    colors={[
-                                        "#cedbfe",
-                                        "#fecfef",
-                                        "#d5ffcf",
-                                        "#cbfff3",
-                                        "#cedbfe",
-                                        "#d5ffcf",
-                                    ]}
-                                />
-                            ) : null}
-
                             <Button
+                                loading={loader}
                                 onClick={handleRegisterSubmit}
                                 className="register-btn"
                                 disabled={!cguCheck}
