@@ -8,6 +8,9 @@ import global from "../../global.json";
 export default function Checkout() {
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [reservation, setReservation] = useState({});
+
+    const supplyForHandler = (user_id) => {};
 
     const handleSearch = () => {
         setIsLoading(true);
@@ -16,13 +19,12 @@ export default function Checkout() {
             token: localStorage.getItem("katiacm"),
         });
 
-        cipherRequest(
-            toSend,
-            `${global.api}/reservation/getActiveReservationsOf`
-        ).then((res) => {
-            console.log(res);
-            setIsLoading(false);
-        });
+        cipherRequest(toSend, `${config.api}/reservation/getRFromCode`).then(
+            (res) => {
+                console.log(res.data);
+                setIsLoading(false);
+            }
+        );
     };
 
     const onChange = (text) => {
