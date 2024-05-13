@@ -16,12 +16,13 @@ export default function Checkout() {
             token: localStorage.getItem("katiacm"),
         });
 
-        cipherRequest(toSend, `${global.api}/getActiveReservationsOf`).then(
-            (res) => {
-                console.log(res);
-                setIsLoading(false);
-            }
-        );
+        cipherRequest(
+            toSend,
+            `${global.api}/reservation/getActiveReservationsOf`
+        ).then((res) => {
+            console.log(res);
+            setIsLoading(false);
+        });
     };
 
     const onChange = (text) => {
