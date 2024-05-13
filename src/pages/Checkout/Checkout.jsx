@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../../Layout/Layout";
 import "./Checkout.scss";
-import { Button, Input, Typography } from "antd";
+import { Button, Input, notification } from "antd";
 import { cipherRequest } from "../../services/KTSec/KTSec";
 import global from "../../global.json";
 
@@ -9,8 +9,27 @@ export default function Checkout() {
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [reservation, setReservation] = useState({});
+    const [notif, contexteHandler] = notification.useNotification();
 
-    const supplyForHandler = (user_id) => {};
+    const supplyForHandler = (reservation) => {
+        const toSend = JSON.stringify({});
+        setIsLoading(false);
+    };
+
+    /**
+     * Ouvrir la Notif
+     * @param {string} title Titre de la popup (non implemente encore)
+     * @param {string} message Le contenu
+     * @param {0|1} status 1: Erreur 0: Succes
+     * @param {string} placement topLeft, ...
+     */
+    const openNotif = (title, message, status, placement) => {
+        notif[status === 0 ? "success" : status === 1 ? "error" : "info"]({
+            message: title,
+            description: message,
+            placement,
+        });
+    };
 
     const handleSearch = () => {
         setIsLoading(true);
@@ -23,7 +42,17 @@ export default function Checkout() {
         cipherRequest(toSend, `${global.api}/reservation/getRFromCode`).then(
             (res) => {
                 console.log(res);
-                setIsLoading(false);
+
+                if (res.status === 0) {
+                    supplyForHandler(res.info);
+                } else {
+                    openNotif(
+                        "Caisse",
+                        "Le code ne pointe pas vers une commande existante",
+                        1,
+                        "topLeft"
+                    );
+                }
             }
         );
     };
