@@ -28,6 +28,7 @@ import { ItemsPC } from "./components/ItemsPC";
 import { InformationsPC } from "./components/InformationsPC";
 import { UserPC } from "./components/UserPC";
 import "./main.scss";
+import Checkout from "./pages/Checkout/Checkout";
 
 const router = createHashRouter([
     { path: "*", element: <Home /> },
@@ -38,6 +39,7 @@ const router = createHashRouter([
     { path: "/shop", element: <Shop /> },
     { path: "/cart", element: <Cart /> },
     { path: "/about", element: <About /> },
+    { path: "/checkout", element: <Checkout /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

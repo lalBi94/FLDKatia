@@ -5,6 +5,7 @@ import config from "../../../../../../global.json";
 import { MDBTable, MDBTableBody, MDBTableHead } from "mdbreact";
 import RCode from "../../../../../../components/RCode/RCode";
 import { priceAfterPromo } from "../../../../../../services/Utils/Utils";
+import { Input } from "antd";
 
 export default function ShowReservation({ handleClose }) {
     const [users, setUsers] = useState({});
