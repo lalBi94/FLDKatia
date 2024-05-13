@@ -19,7 +19,7 @@ export default function Checkout() {
             token: localStorage.getItem("katiacm"),
         });
 
-        cipherRequest(toSend, `${config.api}/reservation/getRFromCode`).then(
+        cipherRequest(toSend, `${global.api}/reservation/getRFromCode`).then(
             (res) => {
                 console.log(res.data);
                 setIsLoading(false);
