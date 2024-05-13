@@ -87,6 +87,8 @@ export const setItem = async (settings) => {
         formData.append("promotion", settings.promotion);
         formData.append("category", settings.category);
 
+        console.log(settings);
+
         const query = await axios.post(`${global.api}/item/setItem`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",

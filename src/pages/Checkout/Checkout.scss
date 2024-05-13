@@ -5,5 +5,41 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
+    width: 100%;
+
+    #checkout-title-container {
+        #checkout-title {
+            font-weight: bold;
+        }
+    }
+
+    #checkout-ipt-container {
+    }
+
+    #checkout-btn-container {
+    }
+
+    #card-container {
+        .ant-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .ant-tag {
+                text-align: center;
+            }
+
+            #items-container {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                .items {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                }
+            }
+        }
+    }
 }

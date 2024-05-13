@@ -270,7 +270,7 @@ export default function MyAccount({ data }) {
             </div>
 
             <div className="data-container">
-                <Tag color="cyan">ID #{data._id}</Tag>
+                <Tag color="#00b96b">ID #{data._id}</Tag>
             </div>
         </div>
     );
