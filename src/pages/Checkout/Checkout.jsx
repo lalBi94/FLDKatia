@@ -12,7 +12,17 @@ export default function Checkout() {
     const [notif, contexteHandler] = notification.useNotification();
 
     const supplyForHandler = (reservation) => {
-        const toSend = JSON.stringify({});
+        const toSend = JSON.stringify({
+            token: localStorage.getItem("katiacm"),
+            id: reservation.user_id,
+        });
+
+        cipherRequest(toSend, `${global.api}/customer/getInfoBy`).then(
+            (res) => {
+                console.log(res);
+            }
+        );
+
         setIsLoading(false);
     };
 
