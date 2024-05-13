@@ -110,7 +110,6 @@ export default function CreateItem({ handleClose }) {
         }).then((res) => {
             console.log(res);
             setStatus(res.status);
-            setImgRef(null);
         });
     };
 
