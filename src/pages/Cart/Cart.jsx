@@ -58,8 +58,6 @@ export default function Cart() {
                 return;
             }
 
-            console.log(res.data);
-
             if (res.data.length === 0) {
                 setLoader(false);
                 setHaveSomething(false);
@@ -196,8 +194,6 @@ export default function Cart() {
             items_list: items,
         };
 
-        console.log(pack);
-
         addReservation(pack)
             .then((res) => {
                 if (res.status === 0) {
@@ -256,7 +252,6 @@ export default function Cart() {
             setLoader(false);
 
             if (res.status === 0) {
-                console.log(res);
                 openNotif("", "Article retiré avec succes !", 0);
                 display();
             } else {

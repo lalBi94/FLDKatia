@@ -108,7 +108,6 @@ export default function CreateItem({ handleClose }) {
             promotion: promotion,
             category: category,
         }).then((res) => {
-            console.log(res);
             setStatus(res.status);
         });
     };

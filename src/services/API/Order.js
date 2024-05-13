@@ -63,7 +63,6 @@ export const plusOne = async (settings) => {
                 },
             }
         );
-        console.log(query.data);
 
         return query.data;
     } catch (err) {
@@ -84,8 +83,6 @@ export const moinsOne = async (settings) => {
                 },
             }
         );
-
-        console.log(query.data);
 
         return query.data;
     } catch (err) {
@@ -108,8 +105,6 @@ export const getOrdersOf = async (settings) => {
                 },
             }
         );
-
-        console.log(query.data);
 
         return query.data;
     } catch (err) {

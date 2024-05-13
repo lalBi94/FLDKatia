@@ -12,7 +12,6 @@ export default function About() {
         value: "██████",
     });
     const informations = useInformations();
-    console.log(informations);
 
     useEffect(() => {
         if (informations.tel.length === 0) {
