@@ -21,7 +21,7 @@ export default function Checkout() {
 
         cipherRequest(toSend, `${global.api}/reservation/getRFromCode`).then(
             (res) => {
-                console.log(res.data);
+                console.log(res);
                 setIsLoading(false);
             }
         );
