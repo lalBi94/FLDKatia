@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../popup.scss";
 import { deleteItems, getItems } from "../../../../../../services/API/Items";
+import { Button, notification } from "antd";
 
 /**
  * [ADMIN FEATURES] Supprimer un produit
@@ -10,27 +11,8 @@ import { deleteItems, getItems } from "../../../../../../services/API/Items";
 export default function DeleteItem({ handleClose }) {
     const [showedItems, setShowedItems] = useState([]);
     const [items, setItems] = useState([]);
-    const [selectedItems, _] = useState([]);
-    const [status, setStatus] = useState(null);
-
-    useEffect(() => {
-        getItems().then((res) => {
-            setItems(res);
-            setShowedItems(res);
-        });
-    }, []);
-
-    /**
-     * Ajouter les produits selectionnes dans selectedItems
-     * @param {number} id Identifiant du produit dans la liste
-     */
-    const handleSelect = (id) => {
-        if (selectedItems.indexOf(id) >= 0) {
-            selectedItems.splice(selectedItems.indexOf(id), 1);
-        } else {
-            selectedItems.push(id);
-        }
-    };
+    const [selectedItems, setSelectedItems] = useState([]);
+    const [notif, contextNotif] = notification.useNotification();
 
     /**
      * Supprimer les produits selectionnes
@@ -47,21 +29,69 @@ export default function DeleteItem({ handleClose }) {
         };
 
         deleteItems(pack).then((res) => {
-            setStatus(res.status);
+            if (res.status === 0) {
+                openNotif(
+                    "Administration",
+                    "Retrait d'un ou des produits reussit",
+                    0,
+                    "topLeft"
+                );
+
+                const newShowed = showedItems.filter(
+                    (item) => !selectedItems.includes(item._id)
+                );
+
+                setShowedItems(newShowed);
+                setSelectedItems([]);
+            } else {
+                openNotif(
+                    "Administration",
+                    "Une erreur est survenue",
+                    1,
+                    "topLeft"
+                );
+            }
         });
+    };
+
+    useEffect(() => {
+        getItems().then((res) => {
+            setItems(res);
+            setShowedItems(res);
+        });
+    }, []);
+
+    /**
+     * Ouvrir la Notif
+     * @param {string} title Titre de la popup (non implemente encore)
+     * @param {string} message Le contenu
+     * @param {0|1} status 1: Erreur 0: Succes
+     * @param {string} placement topLeft, ...
+     */
+    const openNotif = (title, message, status, placement) => {
+        notif[status === 0 ? "success" : status === 1 ? "error" : "info"]({
+            message: title,
+            description: message,
+            placement,
+        });
+    };
+
+    /**
+     * Ajouter les produits selectionnes dans selectedItems
+     * @param {number} id Identifiant du produit dans la liste
+     */
+    const handleSelect = (id) => {
+        if (selectedItems.indexOf(id) >= 0) {
+            selectedItems.splice(selectedItems.indexOf(id), 1);
+        } else {
+            selectedItems.push(id);
+        }
     };
 
     return (
         <div className="popup-container">
+            {contextNotif}
             <span className="popup-title">Supprimer des Produits</span>
-
-            {status === 0 ? (
-                <p className="succes">Produit(s) supprimés avec succes !</p>
-            ) : null}
-
-            {status === 1 ? (
-                <p className="error">Une erreur est survenue !</p>
-            ) : null}
 
             <div className="popup-list-w-actions">
                 {showedItems.length > 0
@@ -87,12 +117,12 @@ export default function DeleteItem({ handleClose }) {
             </div>
 
             <div className="popup-btn-container">
-                <button className="btn hvr-shrink" onClick={handleDelete}>
+                <Button danger onClick={handleDelete}>
                     Supprimer
-                </button>
-                <button className="btn hvr-shrink" onClick={handleClose}>
+                </Button>
+                <Button danger onClick={handleClose}>
                     Quitter
-                </button>
+                </Button>
             </div>
         </div>
     );

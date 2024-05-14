@@ -45,7 +45,7 @@ export default function Shop() {
                 setCatChoosen([...catChoosen, mode]);
                 setPlatMode(!platMode);
                 break;
-            case "desert":
+            case "dessert":
                 setCatChoosen([...catChoosen, mode]);
                 setDessertMode(!dessertMode);
                 break;
@@ -69,7 +69,7 @@ export default function Shop() {
                     case "plat":
                         setPlatMode(false);
                         break;
-                    case "desert":
+                    case "dessert":
                         setDessertMode(false);
                         break;
                     default:
@@ -89,7 +89,7 @@ export default function Shop() {
 
     const handleDessert = () => {
         if (!dessertMode) {
-            handleModeChange("desert");
+            handleModeChange("dessert");
         } else {
             setDessertMode(false);
             load().then(() => {

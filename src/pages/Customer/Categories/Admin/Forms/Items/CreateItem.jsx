@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import "../popup.scss";
 import "hover.css";
 import { setItem } from "../../../../../../services/API/Items";
+import { Button, Input, notification } from "antd";
 
 /**
  * [ADMIN FEATURES] Creer un produit
@@ -13,8 +14,8 @@ export default function CreateItem({ handleClose }) {
     const [price, setPrice] = useState("");
     const [promotion, setPromotion] = useState("");
     const [imgRef, setImgRef] = useState(null);
-    const [status, setStatus] = useState(null);
     const [category, setCategory] = useState("");
+    const [notif, contextNotif] = notification.useNotification();
 
     const [refs, _] = useState({
         name: useRef(null),
@@ -25,11 +26,25 @@ export default function CreateItem({ handleClose }) {
     });
 
     /**
+     * Ouvrir la Notif
+     * @param {string} title Titre de la popup (non implemente encore)
+     * @param {string} message Le contenu
+     * @param {0|1} status 1: Erreur 0: Succes
+     * @param {string} placement topLeft, ...
+     */
+    const openNotif = (title, message, status, placement) => {
+        notif[status === 0 ? "success" : status === 1 ? "error" : "info"]({
+            message: title,
+            description: message,
+            placement,
+        });
+    };
+
+    /**
      * Nom du produit
      * @param {Event} e
      */
     const handleName = (e) => {
-        setStatus(null);
         setName(e.target.value);
     };
 
@@ -38,7 +53,6 @@ export default function CreateItem({ handleClose }) {
      * @param {Event} e
      */
     const handlePrice = (e) => {
-        setStatus(null);
         setPrice(e.target.value);
     };
 
@@ -47,7 +61,6 @@ export default function CreateItem({ handleClose }) {
      * @param {Event} e
      */
     const handleCategory = (e) => {
-        setStatus(null);
         setCategory(e.target.value);
     };
 
@@ -56,7 +69,6 @@ export default function CreateItem({ handleClose }) {
      * @param {Event} e
      */
     const handlePromotion = (e) => {
-        setStatus(null);
         setPromotion(e.target.value);
     };
 
@@ -66,7 +78,6 @@ export default function CreateItem({ handleClose }) {
      */
     const handleImgRef = (e) => {
         e.preventDefault();
-        setStatus(null);
 
         const image = e.target.files[0];
         const reader = new FileReader();
@@ -78,7 +89,6 @@ export default function CreateItem({ handleClose }) {
                     fileExtension.toLowerCase()
                 )
             ) {
-                setStatus(4);
                 return;
             }
 
@@ -96,7 +106,6 @@ export default function CreateItem({ handleClose }) {
      */
     const handleCreateItem = () => {
         if (!name || !price || !promotion || !imgRef) {
-            setStatus(3);
             return;
         }
 
@@ -108,7 +117,21 @@ export default function CreateItem({ handleClose }) {
             promotion: promotion,
             category: category,
         }).then((res) => {
-            setStatus(res.status);
+            if (res.status === 0) {
+                openNotif(
+                    "Administration",
+                    "Produit cree avec succes !",
+                    0,
+                    "topLeft"
+                );
+            } else {
+                openNotif(
+                    "Administration",
+                    "Une erreur est survenue...",
+                    1,
+                    "topLeft"
+                );
+            }
         });
     };
 
@@ -120,42 +143,25 @@ export default function CreateItem({ handleClose }) {
         for (const e in refs) {
             refs[e].current.value = "";
         }
+
+        setImgRef(null);
     };
 
     return (
         <div className="popup-container">
+            {contextNotif}
             <span className="popup-title">Création de Produit</span>
-
-            {status === 1 ? (
-                <p className="error">Une erreur est survenue !</p>
-            ) : null}
-
-            {status === 2 ? (
-                <p className="error">Ce Produit existe deja !</p>
-            ) : null}
-
-            {status === 3 ? (
-                <p className="error">Remplissez tous les champs !</p>
-            ) : null}
-
-            {status === 4 ? (
-                <p className="error">Format de l'image non pris en charge !</p>
-            ) : null}
-
-            {status === 0 ? (
-                <p className="succes">Le Produit a été crée !</p>
-            ) : null}
 
             {imgRef ? <img className="preview" src={imgRef} alt="" /> : null}
 
-            <input
+            <Input
                 ref={refs.name}
                 onChange={handleName}
                 className="ipt"
                 type="text"
                 placeholder="Nom"
             />
-            <input
+            <Input
                 ref={refs.price}
                 onChange={handlePrice}
                 className="ipt"
@@ -163,7 +169,7 @@ export default function CreateItem({ handleClose }) {
                 type="number"
                 placeholder="Prix"
             />
-            <input
+            <Input
                 ref={refs.promotion}
                 onChange={handlePromotion}
                 className="ipt"
@@ -187,21 +193,21 @@ export default function CreateItem({ handleClose }) {
                 <select ref={refs.category} onChange={handleCategory}>
                     <option value="Entrée">Entrée</option>
                     <option value="Plat">Plat</option>
-                    <option value="Dessert">Desert</option>
+                    <option value="Dessert">Dessert</option>
                     <option value="Autres">Autres</option>
                 </select>
             </div>
 
             <div className="popup-btn-container">
-                <button className="btn hvr-shrink" onClick={handleCreateItem}>
+                <Button className="" onClick={handleCreateItem}>
                     Creer
-                </button>
-                <button className="btn hvr-shrink" onClick={handleClose}>
+                </Button>
+                <Button danger className="" onClick={handleClose}>
                     Quitter
-                </button>
-                <button className="btn hvr-shrink" onClick={handleClear}>
+                </Button>
+                <Button danger className="" onClick={handleClear}>
                     Vider
-                </button>
+                </Button>
             </div>
         </div>
     );

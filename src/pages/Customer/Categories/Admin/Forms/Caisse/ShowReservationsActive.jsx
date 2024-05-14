@@ -5,6 +5,7 @@ import config from "../../../../../../global.json";
 import RCode from "../../../../../../components/RCode/RCode";
 import { MDBTable, MDBTableBody, MDBTableHead } from "mdbreact";
 import { priceAfterPromo } from "../../../../../../services/Utils/Utils";
+import { Button, Tag } from "antd";
 
 export default function ShowReservationsActive({ handleClose }) {
     const [reservations, setReservation] = useState([]);
@@ -46,13 +47,9 @@ export default function ShowReservationsActive({ handleClose }) {
             for (let i = 0; i <= res.data.length - 1; ++i) {
                 tab_rows.push({
                     status: (
-                        <span
-                            className={`tab-status ${
-                                res.data[i].status ? "actif-res" : "inactif-res"
-                            }`}
-                        >
-                            {res.data[i].status ? "Actif" : "Non-Actif"}
-                        </span>
+                        <Tag color={res.data[i].status ? "#349734" : "#cb4a4a"}>
+                            {res.data[i].status ? "Active" : "Inactive"}
+                        </Tag>
                     ),
                     rcode: <RCode code={res.data[i].qrtxt} />,
                     panier: (
@@ -87,22 +84,23 @@ export default function ShowReservationsActive({ handleClose }) {
                     ),
                     action: (
                         <div className="tab-actions">
-                            <button
+                            <Button
                                 className="tab-btn"
                                 onClick={() => {
                                     handleActivate(res.data[i]._id);
                                 }}
                             >
                                 Activer
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                                 className="tab-btn"
+                                danger
                                 onClick={() => {
                                     handleDesactivate(res.data[i]._id);
                                 }}
                             >
                                 Desactiver
-                            </button>
+                            </Button>
                         </div>
                     ),
                 });
@@ -166,9 +164,9 @@ export default function ShowReservationsActive({ handleClose }) {
             ) : null}
 
             <div className="popup-btn-container">
-                <button className="btn hvr-shrink" onClick={handleClose}>
+                <Button className="" danger onClick={handleClose}>
                     Quitter
-                </button>
+                </Button>
             </div>
         </div>
     );

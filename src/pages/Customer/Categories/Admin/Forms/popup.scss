@@ -39,12 +39,11 @@
     #popup-table-container {
         width: 100%;
         overflow: auto;
-        max-height: 300px;
+        max-height: 400px;
 
         table {
             background: white;
             width: 100%;
-            border: 3px dashed $red;
 
             thead {
                 tr {
@@ -59,7 +58,7 @@
                 tr {
                     td {
                         padding: 10px;
-                        border-bottom: 3px dashed $red;
+                        border-bottom: 3px solid #73e4c9;
 
                         .tab-status {
                             color: white;
@@ -107,7 +106,6 @@
         overflow-y: scroll;
         gap: 20px;
         height: 400px;
-        border: 5px dashed $red;
 
         .list {
             display: flex;
@@ -150,8 +148,8 @@
         flex-direction: column;
         max-height: 300px;
         overflow-y: scroll;
-
-        gap: 5px;
+        gap: 10px;
+        width: 50%;
 
         .active {
             background: $red;
@@ -159,7 +157,7 @@
         }
 
         .popup-list-data {
-            border: 2px solid $red;
+            border: 1px solid #73e4c9;
             padding: 10px;
             display: flex;
             flex-direction: row;
@@ -174,13 +172,14 @@
                 font-weight: bold;
             }
         }
+
+        @media (max-width: $responsive) {
+            width: 100%;
+        }
     }
 
     @media (max-width: $responsive) {
         #popup-table-container {
-            table {
-                border: 4px dashed $red;
-            }
         }
         .popup-list-data {
             justify-content: none;
@@ -218,8 +217,6 @@
 
 @media (max-width: $responsive) {
     .popup-container {
-        align-items: normal;
-
         #popup-table-container {
         }
     }

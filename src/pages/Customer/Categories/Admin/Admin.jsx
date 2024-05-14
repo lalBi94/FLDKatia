@@ -4,7 +4,6 @@ import CreateItem from "./Forms/Items/CreateItem";
 import DeleteItem from "./Forms/Items/DeleteItem";
 import ModifyItem from "./Forms/Items/ModifyItem";
 import ShowReservation from "./Forms/Customers/ShowReservations";
-import CheckCode from "./Forms/Caisse/CheckCode";
 import ShowReservationsActive from "./Forms/Caisse/ShowReservationsActive";
 import { cipherRequest } from "../../../../services/KTSec/KTSec";
 import config from "../../../../global.json";
@@ -110,15 +109,6 @@ export default function Admin() {
             <div className="admin-category">
                 <h3 className="admin-category-title">En Caisse</h3>
                 <div className="admin-category-btns">
-                    <Button
-                        onClick={() => {
-                            handleForm("check_code");
-                        }}
-                        className=""
-                    >
-                        Entrer un code
-                    </Button>
-
                     <Button
                         className=""
                         onClick={() => {
