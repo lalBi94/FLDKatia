@@ -334,10 +334,10 @@ export default function Shop() {
                                     initial={{ opacity: 0.5 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    duration={1500}
+                                    duration={4000}
                                     key={k}
                                 >
-                                    <div className="item-container hvr-float">
+                                    <div className="item-container">
                                         <img
                                             className="item-imgRef"
                                             src={chunked[current][v].imgRef}

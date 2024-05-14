@@ -12,6 +12,7 @@ import axios from "axios";
 import "hover.css";
 import { getItemsLength } from "../../../../services/API/Items";
 import ChangeCoords from "./Forms/Us/ChangeCoords";
+import { Button } from "antd";
 
 /**
  * [ADMIN FEATURES] Administration du site
@@ -109,30 +110,30 @@ export default function Admin() {
             <div className="admin-category">
                 <h3 className="admin-category-title">En Caisse</h3>
                 <div className="admin-category-btns">
-                    <button
+                    <Button
                         onClick={() => {
                             handleForm("check_code");
                         }}
-                        className="admin-category-btn"
+                        className=""
                     >
                         Entrer un code
-                    </button>
+                    </Button>
 
-                    <button
-                        className="admin-category-btn"
+                    <Button
+                        className=""
                         onClick={() => {
                             handleForm("show_reservations_active");
                         }}
                     >
                         Voir les réservations courantes
-                    </button>
+                    </Button>
                 </div>
 
                 <h3 className="admin-category-title">
                     Données utiles
-                    <button className="spe-btn btn" onClick={handleGetStats}>
+                    <Button className="" onClick={handleGetStats}>
                         ↺
-                    </button>
+                    </Button>
                 </h3>
 
                 <div id="admin-solde">
@@ -152,32 +153,32 @@ export default function Admin() {
 
                 <h3 className="admin-category-title">Produits</h3>
                 <div className="admin-category-btns">
-                    <button
+                    <Button
                         onClick={() => {
                             handleForm("create_item");
                         }}
-                        className="admin-category-btn"
+                        className=""
                     >
                         Créer un Produit
-                    </button>
+                    </Button>
 
-                    <button
+                    <Button
                         onClick={() => {
                             handleForm("delete_item");
                         }}
-                        className="admin-category-btn"
+                        className=""
                     >
                         Supprimer des Produits
-                    </button>
+                    </Button>
 
-                    <button
+                    <Button
                         onClick={() => {
                             handleForm("modify_item");
                         }}
-                        className="admin-category-btn"
+                        className=""
                     >
                         Modifier un Produit
-                    </button>
+                    </Button>
                 </div>
             </div>
 
@@ -185,14 +186,14 @@ export default function Admin() {
                 <h3 className="admin-category-title">Clients</h3>
 
                 <div className="admin-category-btns">
-                    <button
-                        className="admin-category-btn"
+                    <Button
+                        className=""
                         onClick={() => {
                             handleForm("show_reservation");
                         }}
                     >
                         Voir les reservations
-                    </button>
+                    </Button>
                 </div>
             </div>
 
@@ -200,17 +201,15 @@ export default function Admin() {
                 <h3 className="admin-category-title">Support</h3>
 
                 <div className="admin-category-btns">
-                    <button className="admin-category-btn">
-                        Voir les tickets (non impl)
-                    </button>
-                    <button
-                        className="admin-category-btn"
+                    <Button className="">Voir les tickets (non impl)</Button>
+                    <Button
+                        className=""
                         onClick={() => {
                             handleForm("coords");
                         }}
                     >
                         Modifier les coordonnees
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>

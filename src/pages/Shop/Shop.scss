@@ -84,9 +84,12 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px;
+            position: relative;
             gap: 10px;
 
             &:hover {
+                transition: ease-in-out;
+                cursor: pointer;
                 .item-hover-actions {
                     display: flex;
                 }

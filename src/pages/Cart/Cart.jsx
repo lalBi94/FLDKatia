@@ -34,6 +34,8 @@ export default function Cart() {
     const [loader, setLoader] = useState(true);
     const [toDisplay, setToDisplay] = useState(null);
     const [haveSomething, setHaveSomething] = useState(false);
+    const [processLoader, setProcessLoader] = useState(false);
+    const [processClear, setProcessClear] = useState(false);
 
     /**
      * Retourner a la boutique
@@ -187,7 +189,7 @@ export default function Cart() {
      * @return {void}
      */
     const buy = () => {
-        setLoader(true);
+        setProcessLoader(true);
 
         const pack = {
             token: localStorage.getItem("katiacm"),
@@ -221,7 +223,7 @@ export default function Cart() {
                     );
                 }
 
-                setLoader(false);
+                setProcessLoader(false);
             })
             .catch((err) => {
                 console.error(err);
@@ -231,7 +233,7 @@ export default function Cart() {
                     1,
                     "topLeft"
                 );
-                setLoader(false);
+                setProcessLoader(false);
             });
     };
 
@@ -252,11 +254,16 @@ export default function Cart() {
             setLoader(false);
 
             if (res.status === 0) {
-                openNotif("", "Article retiré avec succes !", 0);
+                openNotif(
+                    "Panier",
+                    "Article retiré avec succes !",
+                    0,
+                    "topLeft"
+                );
                 display();
             } else {
                 openNotif(
-                    "",
+                    "Panier",
                     "Un probleme est survenue lors de la suppresion de l'article !",
                     1
                 );
@@ -269,7 +276,7 @@ export default function Cart() {
      * @return {void}
      */
     const clearCart = () => {
-        setLoader(true);
+        setProcessClear(true);
 
         const pack = {
             token: localStorage.getItem("katiacm"),
@@ -283,11 +290,19 @@ export default function Cart() {
                     0,
                     "topLeft"
                 );
-                setToDisplay(null);
+                setHaveSomething(false);
+                setToDisplay(emptySpan);
                 setItems(null);
+            } else {
+                openNotif(
+                    "Panier",
+                    "Un probleme est survenu lors de votre action",
+                    1,
+                    "topLeft"
+                );
             }
 
-            setLoader(false);
+            setProcessClear(false);
         });
     };
 
@@ -305,7 +320,7 @@ export default function Cart() {
         plusOne(pack).then((res) => {
             if (res.status === 0) {
                 openNotif(
-                    "Ajout dans le panier",
+                    "Panier",
                     "Vous venez d'augmenter la quantite d'un produit",
                     0,
                     "topLeft"
@@ -313,7 +328,7 @@ export default function Cart() {
                 display();
             } else {
                 openNotif(
-                    "Ajout dans le panier",
+                    "Panier",
                     "Un probleme est survenu lors de votre action",
                     1,
                     "topLeft"
@@ -352,7 +367,7 @@ export default function Cart() {
         moinsOne(pack).then((res) => {
             if (res.status === 0) {
                 openNotif(
-                    "Ajout dans le panier",
+                    "Panier",
                     "Vous venez de diminuer la quantite d'un produit",
                     0,
                     "topLeft"
@@ -361,7 +376,7 @@ export default function Cart() {
                 display();
             } else {
                 openNotif(
-                    "Ajout dans le panier",
+                    "Panier",
                     "Un probleme est survenu lors de votre action",
                     1,
                     "topLeft"
@@ -504,6 +519,7 @@ export default function Cart() {
                                 <div id="cart-total-btns">
                                     <Button
                                         className=""
+                                        loading={processLoader}
                                         onClick={() => {
                                             buy();
                                         }}
