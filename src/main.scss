@@ -13,6 +13,16 @@ $pastel_red: #ff6961;
 $pastel_orange: #ff885e;
 $pastel_yellow: #fdeb79;
 
+@font-face {
+    font-family: "DancingScript-Regular";
+    src: url("./fonts/DancingScript-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "DancingScript-SemiBold";
+    src: url("./fonts/DancingScript-SemiBold.ttf") format("truetype");
+}
+
 html {
     font-family: "Roboto", sans-serif;
     margin: 0 auto;
@@ -26,6 +36,10 @@ html {
         padding: 0;
         height: 100%;
         width: 100%;
+
+        .title-spe-font-semibold {
+            font-family: "DancingScript-SemiBold";
+        }
 
         .somerrors {
             background: $red;

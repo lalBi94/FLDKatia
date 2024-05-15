@@ -5,12 +5,13 @@ import config from "../../../../../../global.json";
 import { MDBTable, MDBTableBody, MDBTableHead } from "mdbreact";
 import RCode from "../../../../../../components/RCode/RCode";
 import { priceAfterPromo } from "../../../../../../services/Utils/Utils";
-import { Input } from "antd";
+import { Input, Button, Tag, notification } from "antd";
 
 export default function ShowReservation({ handleClose }) {
     const [users, setUsers] = useState({});
     const [selectedUser, setSelectedUser] = useState({});
     const [reservations, setReservations] = useState([]);
+    const [notif, notifContext] = notification.useNotification();
 
     useEffect(() => {
         const toSend = JSON.stringify({
@@ -24,6 +25,21 @@ export default function ShowReservation({ handleClose }) {
         );
     }, []);
 
+    /**
+     * Ouvrir la Notif
+     * @param {string} title Titre de la popup (non implemente encore)
+     * @param {string} message Le contenu
+     * @param {0|1} status 1: Erreur 0: Succes
+     * @param {string} placement topLeft, ...
+     */
+    const openNotif = (title, message, status, placement) => {
+        notif[status === 0 ? "success" : status === 1 ? "error" : "info"]({
+            message: title,
+            description: message,
+            placement,
+        });
+    };
+
     const handleActivate = (id) => {
         const toSend = JSON.stringify({
             token: localStorage.getItem("katiacm"),
@@ -36,6 +52,19 @@ export default function ShowReservation({ handleClose }) {
         ).then((res) => {
             if (res.status === 0) {
                 handleSelect(selectedUser);
+                openNotif(
+                    "Administration",
+                    "Reservation re-active avec succes",
+                    0,
+                    "topLeft"
+                );
+            } else {
+                openNotif(
+                    "Administration",
+                    "Une erreur est survenue",
+                    1,
+                    "topLeft"
+                );
             }
         });
     };
@@ -52,11 +81,26 @@ export default function ShowReservation({ handleClose }) {
         ).then((res) => {
             if (res.status === 0) {
                 handleSelect(selectedUser);
+                openNotif(
+                    "Administration",
+                    "Reservation desactive avec succes",
+                    0,
+                    "topLeft"
+                );
+            } else {
+                openNotif(
+                    "Administration",
+                    "Une erreur est survenue",
+                    1,
+                    "topLeft"
+                );
             }
         });
     };
 
     const handleSelect = (user) => {
+        console.log(user);
+
         const toSend = JSON.stringify({
             token: localStorage.getItem("katiacm"),
             userId: user._id,
@@ -97,17 +141,17 @@ export default function ShowReservation({ handleClose }) {
                 for (let i = 0; i <= res2.reservations.length - 1; ++i) {
                     tab_rows.push({
                         status: (
-                            <span
-                                className={`tab-status ${
+                            <Tag
+                                color={
                                     res2.reservations[i].status
-                                        ? "actif-res"
-                                        : "inactif-res"
-                                }`}
+                                        ? "#349734"
+                                        : "#cb4a4a"
+                                }
                             >
                                 {res2.reservations[i].status
-                                    ? "Actif"
-                                    : "Non-Actif"}
-                            </span>
+                                    ? "Active"
+                                    : "Non-active"}
+                            </Tag>
                         ),
                         rcode: <RCode code={res2.reservations[i].qrtxt} />,
                         total: (
@@ -150,8 +194,8 @@ export default function ShowReservation({ handleClose }) {
                         ),
                         action: (
                             <div className="tab-actions">
-                                <button
-                                    className="tab-btn"
+                                <Button
+                                    className=""
                                     onClick={() => {
                                         handleActivate(
                                             res2.reservations[i]._id
@@ -159,9 +203,10 @@ export default function ShowReservation({ handleClose }) {
                                     }}
                                 >
                                     Activer
-                                </button>
-                                <button
+                                </Button>
+                                <Button
                                     className="tab-btn"
+                                    danger
                                     onClick={() => {
                                         handleDesactivate(
                                             res2.reservations[i]._id
@@ -169,7 +214,7 @@ export default function ShowReservation({ handleClose }) {
                                     }}
                                 >
                                     Desactiver
-                                </button>
+                                </Button>
                             </div>
                         ),
                     });
@@ -240,6 +285,7 @@ export default function ShowReservation({ handleClose }) {
 
     return users.length > 0 ? (
         <div className="popup-container">
+            {notifContext}
             <div className="popup-list-w-actions">
                 {users.length > 0
                     ? Object.keys(users).map((v, k) => (
@@ -276,12 +322,12 @@ export default function ShowReservation({ handleClose }) {
             ) : null}
 
             <div className="popup-btn-container">
-                <button className="btn hvr-shrink" onClick={handleClose}>
+                <Button danger className="" onClick={handleClose}>
                     Quitter
-                </button>
-                <button className="btn hvr-shrink" onClick={handleBack}>
+                </Button>
+                <Button danger className="" onClick={handleBack}>
                     Retour
-                </button>
+                </Button>
             </div>
         </div>
     ) : null;

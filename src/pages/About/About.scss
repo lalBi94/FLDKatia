@@ -6,6 +6,7 @@
     justify-content: space-evenly;
     width: 100%;
     gap: 10px;
+    padding-bottom: 20px;
 
     @media (max-width: 1200px) {
         flex-direction: column;
@@ -43,21 +44,59 @@
         }
     }
 
-    #contact-container {
-        height: 100%;
+    #left-side-container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        height: 100%;
+        gap: 40px;
 
-        #contact-title {
-        }
-
-        #contact-list {
+        #support-container {
+            height: 50%;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
 
-            .contact-el {
+            #support-content {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+
+                #support-ipts {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                }
+
+                #support-checkbox {
+                }
+
+                #support-btns {
+                }
+            }
+        }
+
+        #contact-container {
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            #contact-title {
+            }
+
+            #contact-list {
+                display: flex;
+                flex-direction: column;
+
+                .contact-el {
+                }
             }
         }
     }

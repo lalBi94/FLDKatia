@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getItems, modifyItem } from "../../../../../../services/API/Items";
+import { Button, Input, notification } from "antd";
 
 /**
  * [ADMIN FEATURES] Modifier un produit
@@ -13,14 +14,13 @@ export default function ModifyItem({ handleClose }) {
     const [modifyPrice, setModifyPrice] = useState("");
     const [modifyPromotion, setModifyPromotion] = useState("");
     const [modifyImgRef, setModifyImgRef] = useState("");
-    const [status, setStatus] = useState(null);
+    const [notif, contextNotif] = notification.useNotification();
 
     /**
      * Nom du produit
      * @param {Event} e
      */
     const handleModifyName = (e) => {
-        setStatus(null);
         setModifyName(e.target.value);
     };
 
@@ -29,7 +29,6 @@ export default function ModifyItem({ handleClose }) {
      * @param {Event} e
      */
     const handleModifyImgRef = (e) => {
-        setStatus(null);
         setModifyImgRef(e.target.value);
     };
 
@@ -38,7 +37,6 @@ export default function ModifyItem({ handleClose }) {
      * @param {Event} e
      */
     const handleModifyPrice = (e) => {
-        setStatus(null);
         setModifyPrice(parseFloat(e.target.value));
     };
 
@@ -47,7 +45,6 @@ export default function ModifyItem({ handleClose }) {
      * @param {Event} e
      */
     const handleModifyPromotion = (e) => {
-        setStatus(null);
         setModifyPromotion(e.target.value);
     };
 
@@ -56,8 +53,6 @@ export default function ModifyItem({ handleClose }) {
      * @param {*} item Produit selectionne
      */
     const handleSelect = (item) => {
-        setStatus(null);
-
         if (JSON.stringify(item) === JSON.stringify(selectedItem)) {
             setSelectedItem({});
         } else {
@@ -84,11 +79,37 @@ export default function ModifyItem({ handleClose }) {
         };
 
         modifyItem(pack).then((res) => {
-            setStatus(res.status);
-
             if (res.status === 0) {
+                openNotif(
+                    "Administration",
+                    "Produit modifie avec succes",
+                    0,
+                    "topLeft"
+                );
                 showItems();
+            } else {
+                openNotif(
+                    "Administration",
+                    "Une erreur est survenue",
+                    1,
+                    "topLeft"
+                );
             }
+        });
+    };
+
+    /**
+     * Ouvrir la Notif
+     * @param {string} title Titre de la popup (non implemente encore)
+     * @param {string} message Le contenu
+     * @param {0|1} status 1: Erreur 0: Succes
+     * @param {string} placement topLeft, ...
+     */
+    const openNotif = (title, message, status, placement) => {
+        notif[status === 0 ? "success" : status === 1 ? "error" : "info"]({
+            message: title,
+            description: message,
+            placement,
         });
     };
 
@@ -104,13 +125,9 @@ export default function ModifyItem({ handleClose }) {
 
     return (
         <div className="popup-container">
+            {contextNotif}
+
             <span className="popup-title">Modifier un Produit</span>
-
-            {status === 0 ? <p className="succes">Produit modifié !</p> : null}
-
-            {status === 1 ? (
-                <p className="error">Un probleme est survenu !</p>
-            ) : null}
 
             <div className="popup-list-w-actions">
                 {showedItems.length > 0
@@ -147,40 +164,40 @@ export default function ModifyItem({ handleClose }) {
                         src={selectedItem.imgRef}
                         alt={`Image de ${showedItems.name}`}
                     />
-                    <input
+                    <Input
                         onChange={handleModifyImgRef}
                         type="text"
-                        className="popup-modify-url ipt"
+                        className=""
                         placeholder={`URL de l'image: ${selectedItem.imgRef}`}
                     />
-                    <input
+                    <Input
                         onChange={handleModifyName}
                         type="text"
-                        className="popup-modify-title ipt"
+                        className=""
                         placeholder={`Nom: ${selectedItem.name}`}
                     />
-                    <input
+                    <Input
                         onChange={handleModifyPrice}
                         type="number"
-                        className="popup-modify-price ipt"
+                        className=""
                         placeholder={`Prix: ${selectedItem.price}`}
                     />
-                    <input
+                    <Input
                         onChange={handleModifyPromotion}
                         type="number"
-                        className="popup-modify-promotion ipt"
+                        className=""
                         placeholder={`Promotion: ${selectedItem.promotion}`}
                     />
                 </div>
             ) : null}
 
             <div className="popup-btn-container">
-                <button className="btn hvr-shrink" onClick={handleModify}>
+                <Button className="" onClick={handleModify}>
                     Modifier
-                </button>
-                <button className="btn hvr-shrink" onClick={handleClose}>
+                </Button>
+                <Button danger className="" onClick={handleClose}>
                     Quitter
-                </button>
+                </Button>
             </div>
         </div>
     );

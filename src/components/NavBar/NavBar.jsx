@@ -70,7 +70,10 @@ export default function NavBar() {
 
         about: (
             <li className="nav-element resp">
-                <Link className="nav-link hvr-wobble-bottom" to="/about">
+                <Link
+                    className="nav-link hvr-wobble-bottom title-spe-font-semibold"
+                    to="/about"
+                >
                     A Propos
                 </Link>
             </li>
@@ -78,7 +81,10 @@ export default function NavBar() {
 
         home: (
             <li className="nav-element resp">
-                <Link className="nav-link hvr-wobble-bottom" to="/home">
+                <Link
+                    className="nav-link hvr-wobble-bottom title-spe-font-semibold"
+                    to="/home"
+                >
                     Accueil
                 </Link>
             </li>
@@ -86,7 +92,10 @@ export default function NavBar() {
 
         shop: (
             <li className="nav-element resp">
-                <Link className="nav-link hvr-wobble-bottom" to="/shop">
+                <Link
+                    className="nav-link hvr-wobble-bottom title-spe-font-semibold"
+                    to="/shop"
+                >
                     À la carte
                 </Link>
             </li>
@@ -94,7 +103,10 @@ export default function NavBar() {
 
         gate: (
             <li className="nav-element resp">
-                <Link className="nav-link hvr-wobble-bottom" to="/gate">
+                <Link
+                    className="nav-link hvr-wobble-bottom title-spe-font-semibold"
+                    to="/gate"
+                >
                     Portail
                 </Link>
             </li>
@@ -102,7 +114,10 @@ export default function NavBar() {
 
         instance_client: (
             <li className="nav-element resp">
-                <Link className="nav-link hvr-wobble-bottom" to="/customer">
+                <Link
+                    className="nav-link hvr-wobble-bottom title-spe-font-semibold"
+                    to="/customer"
+                >
                     Espace Client
                 </Link>
             </li>
@@ -116,7 +131,10 @@ export default function NavBar() {
 
         cart: (
             <li className="nav-element resp">
-                <Link className="nav-link spe hvr-wobble-bottom" to="/cart">
+                <Link
+                    className="nav-link spe title-spe-font-semibold hvr-wobble-bottom"
+                    to="/cart"
+                >
                     Panier
                 </Link>
             </li>

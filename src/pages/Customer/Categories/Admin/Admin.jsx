@@ -22,6 +22,7 @@ export default function Admin() {
     const [solde, setSolde] = useState({ av: "██████", ca: "██████" });
     const [nbItems, setNbItems] = useState("██████");
     const [nbCustomer, setNbCustomer] = useState("██████");
+    const [statLoader, setStatLoader] = useState(false);
 
     /**
      * Ouvrir/Fermer le formulaire
@@ -32,15 +33,11 @@ export default function Admin() {
     };
 
     const handleGetStats = () => {
+        setStatLoader(true);
+
         const toSend = JSON.stringify({
             token: localStorage.getItem("katiacm"),
         });
-
-        cipherRequest(toSend, `${config.api}/reservation/getSolde`).then(
-            (res) => {
-                setSolde({ av: res.av.toFixed(2), ca: res.ca.toFixed(2) });
-            }
-        );
 
         getItemsLength().then((res) => {
             setNbItems(parseInt(res.n));
@@ -49,6 +46,13 @@ export default function Admin() {
         axios.post(`${config.api}/customer/getCustomersLength`).then((res) => {
             setNbCustomer(parseInt(res.data.n));
         });
+
+        cipherRequest(toSend, `${config.api}/reservation/getSolde`).then(
+            (res) => {
+                setSolde({ av: res.av.toFixed(2), ca: res.ca.toFixed(2) });
+                setStatLoader(false);
+            }
+        );
     };
 
     /**
@@ -121,7 +125,11 @@ export default function Admin() {
 
                 <h3 className="admin-category-title">
                     Données utiles
-                    <Button className="" onClick={handleGetStats}>
+                    <Button
+                        loading={statLoader}
+                        className=""
+                        onClick={handleGetStats}
+                    >
                         ↺
                     </Button>
                 </h3>

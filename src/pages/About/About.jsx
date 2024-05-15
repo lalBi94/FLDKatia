@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAddress, getTel } from "../../services/API/Us";
 import { useInformations } from "../../hooks/useInformations";
+import { Input, Button, notification, Checkbox } from "antd";
+import { cipherRequest } from "../../services/KTSec/KTSec";
+import global from "../../global.json";
 
 export default function About() {
     const [tel, setTel] = useState("██████");
@@ -12,6 +15,93 @@ export default function About() {
         value: "██████",
     });
     const informations = useInformations();
+    const [notif, notifContext] = notification.useNotification();
+    const [acceptCheck, setAcceptCheck] = useState(false);
+    const [object, setObject] = useState("");
+    const [contact, setContact] = useState("");
+    const [request, setRequest] = useState("");
+
+    const handleObject = (e) => {
+        setObject(e.target.value);
+    };
+
+    const handleContact = (e) => {
+        setContact(e.target.value);
+    };
+
+    const handleRequest = (e) => {
+        setRequest(e.target.value);
+    };
+
+    /**
+     * Ouvrir la Notif
+     * @param {string} title Titre de la popup (non implemente encore)
+     * @param {string} message Le contenu
+     * @param {0|1} status 1: Erreur 0: Succes
+     * @param {string} placement topLeft, ...
+     */
+    const openNotif = (title, message, status, placement) => {
+        notif[status === 0 ? "success" : status === 1 ? "error" : "info"]({
+            message: title,
+            description: message,
+            placement,
+        });
+    };
+
+    const handleSupport = () => {
+        if (!localStorage.getItem("katiacm")) {
+            openNotif(
+                "Support",
+                "Vous devez etre connecte pour envoyer un message au support",
+                1,
+                "topLeft"
+            );
+            return;
+        }
+
+        if (
+            object.trim().length === 0 ||
+            contact.trim().length === 0 ||
+            request.trim().length === 0
+        ) {
+            openNotif(
+                "Support",
+                "Tous les champs doivent etre rempli !",
+                1,
+                "topLeft"
+            );
+            return;
+        }
+
+        const toSend = JSON.stringify({
+            token: localStorage.getItem("katiacm"),
+            object,
+            contact,
+            request,
+        });
+
+        cipherRequest(toSend, `${global.api}/sendMessage`)
+            .then((res) => {
+                if (res.status === 0) {
+                    openNotif(
+                        "Support",
+                        "Votre message a ete envoye avec succes !",
+                        0,
+                        "topLeft"
+                    );
+                } else {
+                    openNotif(
+                        "Support",
+                        "Une erreur est survenue !",
+                        1,
+                        "topLeft"
+                    );
+                }
+            })
+            .catch((err) => {
+                openNotif("Support", "Une erreur est survenue !", 1, "topLeft");
+            });
+    };
 
     useEffect(() => {
         if (informations.tel.length === 0) {
@@ -28,8 +118,13 @@ export default function About() {
         }
     }, []);
 
+    const handleAcceptCheck = () => {
+        setAcceptCheck(!acceptCheck);
+    };
+
     return (
         <Layout>
+            {notifContext}
             <div id="about-container">
                 <div id="map-container">
                     <h3 id="map-title">Localisation</h3>
@@ -57,19 +152,19 @@ export default function About() {
                             <br />
                             <style>
                                 {`
-            .mapouter {
-              position: relative;
-              text-align: right;
-              height: 550px;
-              width: 550px;
-            }
-            .gmap_canvas {
-              overflow: hidden;
-              background: none !important;
-              height: 550px;
-              width: 550px;
-            }
-          `}
+                                    .mapouter {
+                                    position: relative;
+                                    text-align: right;
+                                    height: 550px;
+                                    width: 550px;
+                                    }
+                                    .gmap_canvas {
+                                    overflow: hidden;
+                                    background: none !important;
+                                    height: 550px;
+                                    width: 550px;
+                                    }
+                                `}
                             </style>
                             <a href="https://www.embedmaps.co">
                                 custom google maps embed
@@ -78,16 +173,70 @@ export default function About() {
                     </div>{" "}
                 </div>
 
-                <div id="contact-container">
-                    <h3 id="contact-title">Coordonnées</h3>
+                <div id="left-side-container">
+                    <div id="contact-container">
+                        <h3 id="contact-title">Coordonnées</h3>
 
-                    <div id="contact-list">
-                        <span className="contact-el">
-                            Numero de telephone ➜ {tel ? tel : null}
-                        </span>
-                        <span className="contact-el">
-                            Adresse mail ➜ abdellikatia@gmail.com
-                        </span>
+                        <div id="contact-list">
+                            <span className="contact-el">
+                                Numero de telephone ➜ {tel ? tel : null}
+                            </span>
+                            <span className="contact-el">
+                                Adresse mail ➜ abdellikatia@gmail.com
+                            </span>
+                        </div>
+                    </div>
+
+                    <div id="support-container">
+                        <h3 id="support-title">
+                            Support en ligne (Maintenance)
+                        </h3>
+                        <div id="support-content">
+                            <div id="support-ipts">
+                                <Input
+                                    placeholder="Objet"
+                                    type="text"
+                                    maxLength={20}
+                                    onC
+                                    showCount
+                                    onChange={handleObject}
+                                />
+                                <Input
+                                    placeholder="Un moyen de vous contacter"
+                                    type="text"
+                                    maxLength={15}
+                                    showCount
+                                    onChange={handleContact}
+                                />
+                                <Input.TextArea
+                                    placeholder="Votre requete"
+                                    type="text"
+                                    maxLength={350}
+                                    onChange={handleRequest}
+                                    showCount
+                                />
+                            </div>
+
+                            <div id="support-checkbox">
+                                <Checkbox
+                                    onChange={handleAcceptCheck}
+                                    checked={acceptCheck}
+                                >
+                                    En cochant cette case, vous vous engagez à
+                                    utiliser ce service de contact de manière
+                                    responsable{" "}
+                                </Checkbox>
+                            </div>
+
+                            <div id="support-btns">
+                                <Button
+                                    onClick={handleSupport}
+                                    disabled={!acceptCheck}
+                                >
+                                    Envoyer
+                                </Button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

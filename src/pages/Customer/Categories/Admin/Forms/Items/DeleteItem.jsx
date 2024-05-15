@@ -43,6 +43,8 @@ export default function DeleteItem({ handleClose }) {
 
                 setShowedItems(newShowed);
                 setSelectedItems([]);
+
+                handleClose();
             } else {
                 openNotif(
                     "Administration",
