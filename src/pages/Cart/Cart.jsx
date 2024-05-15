@@ -536,6 +536,7 @@ export default function Cart() {
 
                                     <Button
                                         danger
+                                        loading={processClear}
                                         className="cart-clear-btn"
                                         onClick={clearCart}
                                     >
