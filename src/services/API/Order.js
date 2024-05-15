@@ -4,7 +4,7 @@ import global from "../../global.json";
 /**
  * Ajouter un item dans le panier
  * @param {{token: string, id: string, qte: number}} settings
- * @return {{status: 0|1}}
+ * @return {Promise<{status: 0|1}>}
  */
 export const addToCart = async (settings) => {
     try {
@@ -34,7 +34,7 @@ export const addToCart = async (settings) => {
 /**
  * Retirer un produit du panier (peu importe la qte)
  * @param {{id: string}} settings
- * @return {{status: 0|1}}
+ * @return {Promise<{status: 0|1}>}
  */
 export const removeItem = async (settings) => {
     try {
@@ -52,6 +52,11 @@ export const removeItem = async (settings) => {
     }
 };
 
+/**
+ * Faire un +1 sur un produit de la commande
+ * @param {{token: string, id: string}} settings
+ * @return {Promise<{status: 0|1}>}
+ */
 export const plusOne = async (settings) => {
     try {
         const query = await axios.put(
@@ -71,6 +76,11 @@ export const plusOne = async (settings) => {
     }
 };
 
+/**
+ * Faire un -1 sur un produit de la commande
+ * @param {{token: string, id: string}} settings
+ * @return {Promise<{status: 0|1}>}
+ */
 export const moinsOne = async (settings) => {
     try {
         const query = await axios.put(
@@ -91,6 +101,11 @@ export const moinsOne = async (settings) => {
     }
 };
 
+/**
+ * Recuperer le panier d'un utilisateur
+ * @param {{token: string}} settings
+ * @return {Promise<{status: 0|1, data: {}}>}
+ */
 export const getOrdersOf = async (settings) => {
     try {
         const formData = new FormData();
@@ -113,6 +128,11 @@ export const getOrdersOf = async (settings) => {
     }
 };
 
+/**
+ * Vider le panier d'un utilisateur
+ * @param {{token: string}} settings
+ * @return {Promise<{}>}
+ */
 export const removeAllOrdersOf = async (settings) => {
     try {
         const query = await axios.delete(

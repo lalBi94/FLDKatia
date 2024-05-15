@@ -1,6 +1,10 @@
 import axios from "axios";
 import global from "../../global.json";
 
+/**
+ * Recuperer le nombre de produit en boutique
+ * @return {Promise<{status: 0|1, n: number?}>}
+ */
 export const getItemsLength = async () => {
     try {
         const query = await axios.get(`${global.api}/item/getItemsLength`);
@@ -14,7 +18,7 @@ export const getItemsLength = async () => {
 /**
  * Modifier un article
  * @param {{id:string,name:string,price:number,promotion:number,imgRef:string,token:string}} settings
- * @return {{status: 0} | null}
+ * @return {Promise<{status: 0|1} | null>}
  */
 export const modifyItem = async (settings) => {
     try {
@@ -37,7 +41,7 @@ export const modifyItem = async (settings) => {
 
 /**
  * Recuperer la liste des articles
- * @return [{}]
+ * @return {Promise<[{}]>}
  */
 export const getItems = async () => {
     try {
@@ -52,7 +56,7 @@ export const getItems = async () => {
 /**
  * Supprimer un/des item(s).
  * @param {{data:Array<String>,token:string}} settings
- * @return {{status: number} | null}
+ * @return {Promise<{status: 0 | 1}>}
  */
 export const deleteItems = async (settings) => {
     try {
@@ -75,7 +79,7 @@ export const deleteItems = async (settings) => {
 /**
  * Ajouter un item
  * @param {{imgRef: string, token: string, name: string, price: number, promotion: number, category: string}} settings Les details de l'item
- * @return {{status: number} | null}
+ * @return {Promise<{status: number}>}
  */
 export const setItem = async (settings) => {
     try {

@@ -1,6 +1,11 @@
 import axios from "axios";
 import global from "../../global.json";
 
+/**
+ * Creer une reservation
+ * @param {} settings
+ * @return {Promise<{status: 0|1}>}
+ */
 export const addReservation = async (settings) => {
     try {
         const formData = new FormData();
