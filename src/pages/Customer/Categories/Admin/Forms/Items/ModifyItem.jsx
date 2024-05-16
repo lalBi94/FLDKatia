@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getItems, modifyItem } from "../../../../../../services/API/Items";
 import { Button, Input, notification } from "antd";
+import "../popup.scss";
 
 /**
  * [ADMIN FEATURES] Modifier un produit
@@ -82,7 +83,7 @@ export default function ModifyItem({ handleClose }) {
             if (res.status === 0) {
                 openNotif(
                     "Administration",
-                    "Produit modifie avec succes",
+                    "Produit modifié avec succès",
                     0,
                     "topLeft"
                 );
@@ -90,7 +91,7 @@ export default function ModifyItem({ handleClose }) {
             } else {
                 openNotif(
                     "Administration",
-                    "Une erreur est survenue",
+                    "Une erreur est survenue !",
                     1,
                     "topLeft"
                 );

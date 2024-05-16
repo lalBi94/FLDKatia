@@ -120,14 +120,14 @@ export default function CreateItem({ handleClose }) {
             if (res.status === 0) {
                 openNotif(
                     "Administration",
-                    "Produit cree avec succes !",
+                    "Produit créé avec succès !",
                     0,
                     "topLeft"
                 );
             } else {
                 openNotif(
                     "Administration",
-                    "Une erreur est survenue...",
+                    "Une erreur est survenue !",
                     1,
                     "topLeft"
                 );
@@ -200,7 +200,7 @@ export default function CreateItem({ handleClose }) {
 
             <div className="popup-btn-container">
                 <Button className="" onClick={handleCreateItem}>
-                    Creer
+                    Créer
                 </Button>
                 <Button danger className="" onClick={handleClose}>
                     Quitter

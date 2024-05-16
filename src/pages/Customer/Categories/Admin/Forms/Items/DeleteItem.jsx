@@ -32,7 +32,7 @@ export default function DeleteItem({ handleClose }) {
             if (res.status === 0) {
                 openNotif(
                     "Administration",
-                    "Retrait d'un ou des produits reussit",
+                    "Retrait d'un ou des produits réussi",
                     0,
                     "topLeft"
                 );
@@ -48,7 +48,7 @@ export default function DeleteItem({ handleClose }) {
             } else {
                 openNotif(
                     "Administration",
-                    "Une erreur est survenue",
+                    "Une erreur est survenue !",
                     1,
                     "topLeft"
                 );

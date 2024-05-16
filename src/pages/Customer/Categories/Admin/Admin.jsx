@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CreateItem from "./Forms/Items/CreateItem";
 import DeleteItem from "./Forms/Items/DeleteItem";
 import ModifyItem from "./Forms/Items/ModifyItem";
+import ShowSupportPanel from "./Forms/Support/ShowSupportPanel";
 import ShowReservation from "./Forms/Customers/ShowReservations";
 import ShowReservationsActive from "./Forms/Caisse/ShowReservationsActive";
 import { cipherRequest } from "../../../../services/KTSec/KTSec";
@@ -97,6 +98,11 @@ export default function Admin() {
                 setForm(<ChangeCoords handleClose={handleCloseForm} />);
                 break;
             }
+
+            case "support": {
+                setForm(<ShowSupportPanel handleClose={handleCloseForm} />);
+                break;
+            }
         }
 
         window.scrollTo(0, 0);
@@ -120,6 +126,10 @@ export default function Admin() {
                         }}
                     >
                         Voir les réservations courantes
+                    </Button>
+
+                    <Button href="/#/checkout">
+                        Entrer un code de reservation
                     </Button>
                 </div>
 
@@ -190,7 +200,7 @@ export default function Admin() {
                             handleForm("show_reservation");
                         }}
                     >
-                        Voir les reservations
+                        Voir les réservations
                     </Button>
                 </div>
             </div>
@@ -199,7 +209,14 @@ export default function Admin() {
                 <h3 className="admin-category-title">Support</h3>
 
                 <div className="admin-category-btns">
-                    <Button className="">Voir les tickets (non impl)</Button>
+                    <Button
+                        onClick={() => {
+                            handleForm("support");
+                        }}
+                        className=""
+                    >
+                        Voir les tickets
+                    </Button>
                     <Button
                         className=""
                         onClick={() => {

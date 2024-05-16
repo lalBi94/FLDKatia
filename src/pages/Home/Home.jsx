@@ -67,7 +67,7 @@ export default function Home() {
                             </p>
                             <p>
                                 Notez qu'un ou plusieurs articles peuvent ne
-                                plus etre disponible =.
+                                plus etre disponible.
                             </p>
                             <p>
                                 Si vous avez des questions, n'hésitez pas à nous

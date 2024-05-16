@@ -3,6 +3,7 @@ import { cipherRequest } from "../../../../../../services/KTSec/KTSec";
 import "../popup.scss";
 import config from "../../../../../../global.json";
 import { getAddress } from "../../../../../../services/API/Us";
+import { Button, Input, notification } from "antd";
 
 export default function ChangeCoords({ handleClose }) {
     const [status, setStatus] = useState(null);
@@ -10,6 +11,7 @@ export default function ChangeCoords({ handleClose }) {
     const [adress, setAddress] = useState("");
     const [linkToMap, setLinkToMap] = useState("");
     const [tel, setTel] = useState("");
+    const [notif, notifContext] = notification.useNotification();
 
     const handleSelected = (e) => {
         setStatus(null);
@@ -106,6 +108,8 @@ export default function ChangeCoords({ handleClose }) {
 
     return (
         <div className="popup-container">
+            {notifContext}
+
             <span className="popup-title">Changer les valeurs de </span>
 
             <div className="popup-list-w-actions">
@@ -141,10 +145,10 @@ export default function ChangeCoords({ handleClose }) {
 
             {selected ? (
                 selected === "address" ? (
-                    <input
+                    <Input
                         type="text"
                         placeholder="Nouvelle adresse"
-                        className="ipt"
+                        className=""
                         onChange={handleAddress}
                     />
                 ) : null
@@ -152,10 +156,10 @@ export default function ChangeCoords({ handleClose }) {
 
             {selected ? (
                 selected === "tel" ? (
-                    <input
+                    <Input
                         type="text"
                         placeholder="Nouveau numero"
-                        className="ipt"
+                        className=""
                         onChange={handleTel}
                     />
                 ) : null
@@ -163,10 +167,10 @@ export default function ChangeCoords({ handleClose }) {
 
             {selected ? (
                 selected === "linktomap" ? (
-                    <input
+                    <Input
                         type="text"
                         placeholder="Nouveau lien menant a l'adresse"
-                        className="ipt"
+                        className=""
                         onChange={handleLinkToMap}
                     />
                 ) : null
@@ -175,13 +179,13 @@ export default function ChangeCoords({ handleClose }) {
             {status ? <span className="succes">{status}</span> : null}
 
             <div className="popup-btn-container">
-                <button className="btn hvr-shrink" onClick={handleClose}>
+                <Button className="" onClick={handleClose}>
                     Quitter
-                </button>
+                </Button>
 
-                <button className="btn hvr-shrink" onClick={handleSend}>
+                <Button className="" onClick={handleSend}>
                     Envoyer
-                </button>
+                </Button>
             </div>
         </div>
     );

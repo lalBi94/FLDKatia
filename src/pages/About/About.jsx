@@ -20,6 +20,7 @@ export default function About() {
     const [object, setObject] = useState("");
     const [contact, setContact] = useState("");
     const [request, setRequest] = useState("");
+    const [sendLoader, setSendLoader] = useState(false);
 
     const handleObject = (e) => {
         setObject(e.target.value);
@@ -49,15 +50,18 @@ export default function About() {
     };
 
     const handleSupport = () => {
-        if (!localStorage.getItem("katiacm")) {
-            openNotif(
-                "Support",
-                "Vous devez etre connecte pour envoyer un message au support",
-                1,
-                "topLeft"
-            );
-            return;
-        }
+        // A voir ??
+        // if (!localStorage.getItem("katiacm")) {
+        //     openNotif(
+        //         "Support",
+        //         "Vous devez etre connecte pour envoyer un message au support",
+        //         1,
+        //         "topLeft"
+        //     );
+        //     return;
+        // }
+
+        setSendLoader(true);
 
         if (
             object.trim().length === 0 ||
@@ -66,7 +70,7 @@ export default function About() {
         ) {
             openNotif(
                 "Support",
-                "Tous les champs doivent etre rempli !",
+                "Tous les champs doivent être remplis !",
                 1,
                 "topLeft"
             );
@@ -74,18 +78,21 @@ export default function About() {
         }
 
         const toSend = JSON.stringify({
-            token: localStorage.getItem("katiacm"),
-            object,
+            from: localStorage.getItem("katiacm"),
+            content: request,
+            objet: object,
             contact,
-            request,
         });
 
-        cipherRequest(toSend, `${global.api}/sendMessage`)
+        console.log(toSend);
+
+        cipherRequest(toSend, `${global.api}/support/sendMessage`)
             .then((res) => {
+                console.log(res);
                 if (res.status === 0) {
                     openNotif(
                         "Support",
-                        "Votre message a ete envoye avec succes !",
+                        "Votre message a été envoyé avec succès !",
                         0,
                         "topLeft"
                     );
@@ -97,9 +104,12 @@ export default function About() {
                         "topLeft"
                     );
                 }
+
+                setSendLoader(false);
             })
             .catch((err) => {
                 openNotif("Support", "Une erreur est survenue !", 1, "topLeft");
+                setSendLoader(false);
             });
     };
 
@@ -179,7 +189,7 @@ export default function About() {
 
                         <div id="contact-list">
                             <span className="contact-el">
-                                Numero de telephone ➜ {tel ? tel : null}
+                                Numéro de téléphone ➜ {tel ? tel : null}
                             </span>
                             <span className="contact-el">
                                 Adresse mail ➜ abdellikatia@gmail.com
@@ -188,9 +198,7 @@ export default function About() {
                     </div>
 
                     <div id="support-container">
-                        <h3 id="support-title">
-                            Support en ligne (Maintenance)
-                        </h3>
+                        <h3 id="support-title">Support en ligne</h3>
                         <div id="support-content">
                             <div id="support-ipts">
                                 <Input
@@ -231,6 +239,7 @@ export default function About() {
                             <div id="support-btns">
                                 <Button
                                     onClick={handleSupport}
+                                    loading={sendLoader}
                                     disabled={!acceptCheck}
                                 >
                                     Envoyer

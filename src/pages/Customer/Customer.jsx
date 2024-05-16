@@ -137,7 +137,7 @@ export default function Customer() {
                                     className="customer-category-link"
                                     onClick={handleReservations}
                                 >
-                                    Mes reservations
+                                    Mes réservations
                                 </div>
 
                                 <div

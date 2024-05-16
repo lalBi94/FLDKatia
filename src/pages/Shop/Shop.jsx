@@ -78,7 +78,7 @@ export default function Shop() {
                 }
 
                 openNotif(
-                    "A la carte",
+                    "À la carte",
                     "Cette categorie est vide",
                     1,
                     "topLeft"
@@ -322,7 +322,7 @@ export default function Shop() {
                                 onClick={handleEntree}
                                 className={entreeMode ? "active" : ""}
                             >
-                                Entree
+                                Entrée
                             </Button>
                         </div>
                     </div>
