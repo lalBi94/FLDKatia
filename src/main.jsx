@@ -29,21 +29,13 @@ import { InformationsPC } from "./components/InformationsPC";
 import { UserPC } from "./components/UserPC";
 import "./main.scss";
 import Checkout from "./pages/Checkout/Checkout";
-import { CustomScroll } from "react-custom-scroll";
 
 const router = createHashRouter([
     { path: "*", element: <Home /> },
     { path: "/", element: <Home /> },
     { path: "/home", element: <Home /> },
     { path: "/gate", element: <Gate /> },
-    {
-        path: "/customer",
-        element: (
-            <CustomScroll>
-                <Customer />
-            </CustomScroll>
-        ),
-    },
+    { path: "/customer", element: <Customer /> },
     { path: "/shop", element: <Shop /> },
     { path: "/cart", element: <Cart /> },
     { path: "/about", element: <About /> },

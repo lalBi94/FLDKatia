@@ -12,7 +12,6 @@ import "hover.css";
 import { useUser } from "../../hooks/useUser";
 import { ConfigProvider } from "antd";
 import customer from "../Themes/customer_and_gate.json";
-import { CustomScroll } from "react-custom-scroll";
 
 /**
  * Page cliente
