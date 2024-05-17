@@ -11,8 +11,10 @@ import { MDBTable, MDBTableBody, MDBTableHead } from "mdbreact";
 import { moinsOne, plusOne, removeItem } from "../../services/API/Order";
 import { getOrdersOf, removeAllOrdersOf } from "../../services/API/Order";
 import { addReservation } from "../../services/API/Reservation";
-import { notification, Button, ConfigProvider } from "antd";
+import { notification, Button, ConfigProvider, Tag } from "antd";
 import cart from "../Themes/cart.json";
+import { PricePromo } from "../../components/PricePromo/PricePromo";
+import { priceAfterPromo } from "../../services/Utils/Utils";
 
 const emptySpan = (
     <p>
@@ -98,29 +100,27 @@ export default function Cart() {
                         <div className="name-container">
                             <span className="name">{res.data[i].name}</span>
                             {res.data[i].promotion > 0 ? (
-                                <span className="promo">
+                                <Tag color="#cb4a4a">
                                     {res.data[i].promotion}%
-                                </span>
+                                </Tag>
                             ) : null}
                         </div>
                     ),
                     qte: <span className="qte">x{res.data[i].qte}</span>,
-                    price: (
-                        <span className="price">
-                            {res.data[i].promotion > 0
-                                ? (
-                                      (res.data[i].price -
-                                          (res.data[i].price *
-                                              res.data[i].promotion) /
-                                              100) *
-                                      res.data[i].qte
-                                  ).toFixed(2)
-                                : (res.data[i].price * res.data[i].qte).toFixed(
-                                      2
-                                  )}
-                            €
-                        </span>
-                    ),
+                    price:
+                        res.data[i].promotion > 0 ? (
+                            <PricePromo
+                                oldPrice={res.data[i].price * res.data[i].qte}
+                                newPrice={(
+                                    priceAfterPromo(
+                                        res.data[i].price,
+                                        res.data[i].promotion
+                                    ) * res.data[i].qte
+                                ).toFixed(2)}
+                            />
+                        ) : (
+                            `${res.data[i].price * res.data[i].qte}€`
+                        ),
                     action: (
                         <div className="tab-actions">
                             <button

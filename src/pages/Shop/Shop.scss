@@ -13,19 +13,26 @@
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        gap: 15px;
+        gap: 40px;
 
         #search-container {
         }
 
         #filters-cat-container {
             display: flex;
+            flex-direction: row;
             gap: 10px;
 
             .active {
                 background: $pastel_yellow;
                 border: 1px solid $black;
             }
+        }
+
+        #filters-price-container {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
         }
 
         @media (max-width: 700px) {

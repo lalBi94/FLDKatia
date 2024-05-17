@@ -6,6 +6,7 @@ import { cipherRequest } from "../../services/KTSec/KTSec";
 import global from "../../global.json";
 import { priceAfterPromo } from "../../services/Utils/Utils";
 import checkout from "../Themes/cart.json";
+import { PricePromo } from "./../../components/PricePromo/PricePromo";
 
 export default function Checkout() {
     const [search, setSearch] = useState("");
@@ -208,34 +209,42 @@ export default function Checkout() {
                                                 x{reservation.items_list[e].qte}
                                             </span>
                                             <span>
-                                                {" "}
-                                                {
-                                                    reservation.items_list[e]
-                                                        .name
-                                                }{" "}
-                                                (
+                                                {reservation.items_list[e].name}{" "}
                                                 {reservation.items_list[e]
-                                                    .promotion > 0
-                                                    ? `${priceAfterPromo(
-                                                          reservation
-                                                              .items_list[e]
-                                                              .price,
-                                                          reservation
-                                                              .items_list[e]
-                                                              .promotion
-                                                      ).toFixed(
-                                                          2
-                                                      )}€ = ${reservation.items_list[
-                                                          e
-                                                      ].price.toFixed(2)}€ - ${
-                                                          reservation
-                                                              .items_list[e]
-                                                              .promotion
-                                                      }%`
-                                                    : `${reservation.items_list[
-                                                          e
-                                                      ].price.toFixed(2)}€`}
-                                                )
+                                                    .promotion > 0 ? (
+                                                    <PricePromo
+                                                        oldPrice={
+                                                            reservation
+                                                                .items_list[e]
+                                                                .price *
+                                                            reservation
+                                                                .items_list[e]
+                                                                .qte
+                                                        }
+                                                        newPrice={(
+                                                            priceAfterPromo(
+                                                                reservation
+                                                                    .items_list[
+                                                                    e
+                                                                ].price,
+                                                                reservation
+                                                                    .items_list[
+                                                                    e
+                                                                ].promotion
+                                                            ) *
+                                                            reservation
+                                                                .items_list[e]
+                                                                .qte
+                                                        ).toFixed(2)}
+                                                    />
+                                                ) : (
+                                                    <div>
+                                                        {reservation.items_list[
+                                                            e
+                                                        ].price.toFixed(2)}
+                                                        €
+                                                    </div>
+                                                )}
                                             </span>
                                         </div>
                                     )

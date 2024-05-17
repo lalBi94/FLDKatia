@@ -77,15 +77,9 @@
                             display: flex;
                             flex-direction: row;
                             justify-content: space-between;
+                            gap: 20px;
 
                             .name {
-                            }
-
-                            .promo {
-                                background: $red;
-                                color: white;
-                                padding: 2px;
-                                font-size: small;
                             }
                         }
 

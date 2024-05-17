@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SHA512 } from "crypto-js";
 import "./Gate.scss";
 import Layout from "../../Layout/Layout";
 import config from "../../global.json";
 import { cipherRequest } from "../../services/KTSec/KTSec";
-import { Vortex } from "react-loader-spinner";
 import CGU from "../../assets/CGU.pdf";
 import { Input, Button, notification, Checkbox } from "antd";
 import { ConfigProvider } from "antd";
 import gate from "../Themes/customer_and_gate.json";
+import { checkEmail, checkPassword } from "../../services/Utils/Utils";
 
 /**
  * Portal de connexion/inscription
@@ -136,7 +136,7 @@ export default function Gate() {
             return;
         }
 
-        if (!/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+        if (!checkEmail(email)) {
             openNotif("Inscription", "Email invalide", 1, "topLeft");
             setLoader(false);
             setLockDown(false);
@@ -146,7 +146,7 @@ export default function Gate() {
         if (conmfirmPassword !== password) {
             openNotif(
                 "Inscription",
-                "Les deux mots de passe ne sont pas identique.",
+                "Les deux mots de passe doivent etre identique.",
                 1,
                 "topLeft"
             );
@@ -155,10 +155,10 @@ export default function Gate() {
             return;
         }
 
-        if (!/^(?=.*[A-Z])(?=.*[!@#$%^&*])(.{6,})$/.test(password)) {
+        if (!checkPassword(password)) {
             openNotif(
                 "Inscription",
-                "Votre mot de passe doit contenir 6 caracteres, une majuscule et un charactere special.",
+                "Votre mot de passe doit contenir au moins 6 caracteres, une majuscule et un charactere special.",
                 1,
                 "topLeft"
             );

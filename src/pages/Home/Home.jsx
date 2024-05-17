@@ -6,7 +6,7 @@ import HomeMadeImg from "../../assets/homemade.png";
 import Fresh from "../../assets/fresh.png";
 import Exclu from "../../assets/exclu.jpg";
 import Driver from "../../assets/driver.png";
-import Banner from "../../assets/banner.jpg";
+import Banner from "../../assets/banner_t.svg";
 import { Link } from "react-router-dom";
 import NoData from "../../assets/no-data.webp";
 
@@ -22,9 +22,8 @@ export default function Home() {
                     <h2 id="title">
                         Bienvenue chez{" "}
                         <span className="brand hvr-bob">
-                            Les Delices de Katia
-                        </span>{" "}
-                        !
+                            Les Delices de Katia !
+                        </span>
                     </h2>
                     <img id="banner-img" src={Banner} alt="" />
                 </div>
@@ -53,7 +52,7 @@ export default function Home() {
                                 un QR Code et un code de réservation unique.
                                 (Retrouvez votre code dans{" "}
                                 <Link to="/customer">"Mes réservations"</Link>{" "}
-                                sur votre espace client si vous le perdez.)
+                                sur votre espace client si vous le perdez).
                             </p>
                             <p>
                                 Présentez simplement ces codes à notre équipe
@@ -96,7 +95,7 @@ export default function Home() {
                                 </a>
                                 <span className="text">
                                     Découvrez notre cuisine fait maison :
-                                    fraîcheur, qualité et saveur garanties
+                                    fraîcheur, qualité et saveur garanties.
                                 </span>
                             </div>
 

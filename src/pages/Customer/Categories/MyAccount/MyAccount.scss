@@ -28,6 +28,11 @@
         justify-content: space-between;
         align-items: center;
         width: 40%;
+        gap: 10px;
+
+        input {
+            width: 60%;
+        }
 
         .data-modif-btns {
             display: flex;

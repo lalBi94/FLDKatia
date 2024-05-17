@@ -1,0 +1,14 @@
+@import "../../main.scss";
+
+.price-promo-container {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+
+    .price-promo-old {
+        color: $red;
+        text-decoration: line-through;
+    }
+    .price-promo-new {
+    }
+}

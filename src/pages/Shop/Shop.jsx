@@ -13,6 +13,8 @@ import { notification } from "antd";
 import { Button, Input } from "antd";
 import { ConfigProvider } from "antd";
 import shop from "../Themes/shop.json";
+import { priceAfterPromo } from "../../services/Utils/Utils";
+import { PricePromo } from "./../../components/PricePromo/PricePromo";
 
 /**
  * Page de la boutique
@@ -29,6 +31,26 @@ export default function Shop() {
     const [entreeMode, setEntreeMode] = useState(false);
     const [catChoosen, setCatChoosen] = useState([]);
     const items = useItems();
+
+    const handleDecFilter = () => {
+        setCurrent(0);
+        const newChunks = computeChunks(
+            items.items.sort((a, b) => {
+                return b.price - a.price;
+            })
+        );
+        setChunked(newChunks);
+    };
+
+    const handleCroFilter = () => {
+        setCurrent(0);
+        const newChunks = computeChunks(
+            items.items.sort((a, b) => {
+                return a.price - b.price;
+            })
+        );
+        setChunked(newChunks);
+    };
 
     const handleModeChange = (mode) => {
         setEntreeMode(false);
@@ -325,6 +347,11 @@ export default function Shop() {
                                 Entrée
                             </Button>
                         </div>
+
+                        <div id="filters-price-container">
+                            <Button onClick={handleCroFilter}>- au +</Button>
+                            <Button onClick={handleDecFilter}>+ au -</Button>
+                        </div>
                     </div>
 
                     <div id="shop-data-container">
@@ -381,11 +408,32 @@ export default function Shop() {
                                                     );
                                                 }}
                                                 className="item-hover-actions-btn diff now"
-                                                aria-label={`Acheter (${chunked[current][v].price}€)`}
+                                                aria-label={`Acheter (${
+                                                    chunked[current][v]
+                                                        .promotion > 0
+                                                        ? priceAfterPromo(
+                                                              chunked[current][
+                                                                  v
+                                                              ].price,
+                                                              chunked[current][
+                                                                  v
+                                                              ].promotion
+                                                          ).toFixed(2)
+                                                        : chunked[current][v]
+                                                              .price
+                                                }€ TTC)`}
                                             >
                                                 Acheter (
-                                                {chunked[current][v].price}
-                                                €)
+                                                {chunked[current][v].promotion >
+                                                0
+                                                    ? priceAfterPromo(
+                                                          chunked[current][v]
+                                                              .price,
+                                                          chunked[current][v]
+                                                              .promotion
+                                                      ).toFixed(2)
+                                                    : chunked[current][v].price}
+                                                € TTC)
                                             </Button>
                                         </motion.span>
 
@@ -393,55 +441,20 @@ export default function Shop() {
                                             {chunked[current][v].name}
                                         </span>
 
-                                        <div
-                                            className={
-                                                chunked[current][v].promotion >
-                                                0
-                                                    ? "item-price-container item-price-promo"
-                                                    : "item-price-container"
-                                            }
-                                        >
-                                            <span
-                                                className={
-                                                    chunked[current][v]
-                                                        .promotion > 0
-                                                        ? "item-price-w-promo"
-                                                        : "item-price"
+                                        {chunked[current][v].promotion > 0 ? (
+                                            <PricePromo
+                                                oldPrice={
+                                                    chunked[current][v].price
                                                 }
-                                            >
-                                                {chunked[current][v].price}€
-                                                (TTC)
-                                            </span>
-
-                                            {chunked[current][v].promotion >
-                                            0 ? (
-                                                <span className="item-promotion-container">
-                                                    <span className="item-new-price">
-                                                        &nbsp;
-                                                        {(
-                                                            chunked[current][v]
-                                                                .price -
-                                                            (chunked[current][v]
-                                                                .price *
-                                                                chunked[
-                                                                    current
-                                                                ][v]
-                                                                    .promotion) /
-                                                                100
-                                                        ).toFixed(2)}
-                                                        €
-                                                    </span>
-
-                                                    <span className="item-promotion">
-                                                        {
-                                                            chunked[current][v]
-                                                                .promotion
-                                                        }
-                                                        %
-                                                    </span>
-                                                </span>
-                                            ) : null}
-                                        </div>
+                                                newPrice={priceAfterPromo(
+                                                    chunked[current][v].price,
+                                                    chunked[current][v]
+                                                        .promotion
+                                                ).toFixed(2)}
+                                            />
+                                        ) : (
+                                            `${chunked[current][v].price}€`
+                                        )}
                                     </div>
                                 </motion.div>
                             ))

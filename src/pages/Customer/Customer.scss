@@ -13,56 +13,69 @@
         font-size: 0.8em;
         width: 100%;
 
-        .customer-header-txt {
-            #customer-title,
-            #customer-subtitle {
-                margin: 0 auto;
-            }
-        }
-
-        .btn-deco {
+        #customer-header-txt {
             display: flex;
-            align-items: center;
-            width: 45px;
-            height: 45px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            overflow: hidden;
-            transition-duration: 0.3s;
-            box-shadow: -11px 11px 21px #bebebe, 11px -11px 21px #ffffff;
-            background-color: gray;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
 
-            .sign {
-                width: 100%;
-                transition-duration: 0.3s;
-                display: flex;
-                align-items: center;
+            @media (max-width: 700px) {
                 justify-content: center;
+                align-items: center;
+                width: 70%;
             }
 
-            .sign {
-                svg {
-                    width: 17px;
+            #customer-title-cont {
+                #customer-title,
+                #customer-subtitle {
+                    margin: 0 auto;
                 }
             }
 
-            .sign {
-                svg {
-                    path {
-                        fill: white;
+            #logout-cont {
+                .btn-deco {
+                    display: flex;
+                    align-items: center;
+                    width: 45px;
+                    height: 45px;
+                    border: none;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    overflow: hidden;
+                    transition-duration: 0.3s;
+                    background-color: gray;
+
+                    .sign {
+                        width: 100%;
+                        transition-duration: 0.3s;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .sign {
+                        svg {
+                            width: 17px;
+                        }
+                    }
+
+                    .sign {
+                        svg {
+                            path {
+                                fill: white;
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        background: $red;
+                        transition-duration: 0.3s;
+                    }
+
+                    &:hover .sign {
+                        transition-duration: 0.3s;
                     }
                 }
-            }
-
-            &:hover {
-                background: $red;
-                transition-duration: 0.3s;
-                box-shadow: -11px 11px 21px #bebebe, 11px -11px 21px #ffffff;
-            }
-
-            &:hover .sign {
-                transition-duration: 0.3s;
             }
         }
     }

@@ -3,7 +3,7 @@ import "./MyAccount.scss";
 import "hover.css";
 import { cipherRequest } from "../../../../services/KTSec/KTSec";
 import config from "../../../../global.json";
-import { Tag } from "antd";
+import { Tag, Button, Input, notification } from "antd";
 
 /**
  * Visualiser les informations du client
@@ -15,17 +15,31 @@ export default function MyAccount({ data }) {
     const [lastNameM, setLastNameM] = useState("");
     const [emailM, setEmailM] = useState("");
     // const [passwordM, setPasswordM] = useState("");
-    const [isErr, setIsErr] = useState({ flag: false, status: -1 });
     const [isModify, setIsModify] = useState({
         firstname: false,
         lastname: false,
         password: false,
         email: false,
     });
+    const [notif, notifContext] = notification.useNotification();
 
     const handleIsModify = (field) => {
-        setIsErr({ flag: false, status: -1 });
         setIsModify({ ...isModify, [field]: !isModify[field] });
+    };
+
+    /**
+     * Ouvrir la Notif
+     * @param {string} title Titre de la popup (non implemente encore)
+     * @param {string} message Le contenu
+     * @param {0|1} status 1: Erreur 0: Succes
+     * @param {string} placement topLeft, ...
+     */
+    const openNotif = (title, message, status, placement) => {
+        notif[status === 0 ? "success" : status === 1 ? "error" : "info"]({
+            message: title,
+            description: message,
+            placement,
+        });
     };
 
     /**
@@ -69,12 +83,22 @@ export default function MyAccount({ data }) {
                 ).then((status) => {
                     switch (status.data.status) {
                         case 0: {
-                            setIsErr({ flag: true, status: 0 });
+                            openNotif(
+                                "Espace client",
+                                "Votre prénom a bien été changé avec succès. Veuillez vous reconnecter pour voir les modifications.",
+                                0,
+                                "topLeft"
+                            );
                             break;
                         }
 
                         case 1: {
-                            setIsErr({ flag: false, status: 1 });
+                            openNotif(
+                                "Espace client",
+                                "Une erreur est survenue lors du changement de votre prénom. Veuillez réessayer ultérieurement ou contacter le support technique.",
+                                1,
+                                "topLeft"
+                            );
                             break;
                         }
                     }
@@ -96,12 +120,22 @@ export default function MyAccount({ data }) {
                 ).then((status) => {
                     switch (status.data.status) {
                         case 0: {
-                            setIsErr({ flag: true, status: 0 });
+                            openNotif(
+                                "Espace client",
+                                "Votre nom de famille a bien été changé avec succès. Veuillez vous reconnecter pour voir les modifications.",
+                                0,
+                                "topLeft"
+                            );
                             break;
                         }
 
                         case 1: {
-                            setIsErr({ flag: false, status: 1 });
+                            openNotif(
+                                "Espace client",
+                                "Une erreur est survenue lors du changement de votre nom de famille. Veuillez réessayer ultérieurement ou contacter le support technique.",
+                                1,
+                                "topLeft"
+                            );
                             break;
                         }
                     }
@@ -123,17 +157,32 @@ export default function MyAccount({ data }) {
                 ).then((status) => {
                     switch (status.data.status) {
                         case 0: {
-                            setIsErr({ flag: true, status: 0 });
+                            openNotif(
+                                "Espace client",
+                                "Votre email a bien été changé avec succès. Veuillez vous reconnecter pour voir les modifications.",
+                                0,
+                                "topLeft"
+                            );
                             break;
                         }
 
                         case 1: {
-                            setIsErr({ flag: false, status: 1 });
+                            openNotif(
+                                "Espace client",
+                                "Une erreur est survenue lors du changement de votre email. Veuillez réessayer ultérieurement ou contacter le support technique.",
+                                1,
+                                "topLeft"
+                            );
                             break;
                         }
 
                         case 2: {
-                            setIsErr({ flag: false, status: 2 });
+                            openNotif(
+                                "Espace client",
+                                "Cette adresse mail n'est pas disponible ou n'est pas conforme.",
+                                1,
+                                "topLeft"
+                            );
                             break;
                         }
                     }
@@ -148,19 +197,7 @@ export default function MyAccount({ data }) {
 
     return (
         <div id="myaccount-container">
-            {!isErr.flag && isErr.status === 1 ? (
-                <p id="error">Une erreur est survenue !</p>
-            ) : null}
-
-            {!isErr.flag && isErr.status === 2 ? (
-                <p id="error">Cet email n'est pas disponible !</p>
-            ) : null}
-
-            {isErr.flag && isErr.status === 0 ? (
-                <p id="succes">
-                    Reconnectez vous pour voir les modifications !
-                </p>
-            ) : null}
+            {notifContext}
 
             {!isModify.firstname ? (
                 <div className="data-container data">
@@ -174,24 +211,25 @@ export default function MyAccount({ data }) {
                 </div>
             ) : (
                 <div className="data-container data">
-                    <input
+                    <Input
                         type="texte"
                         onChange={handleFirstname}
                         placeholder={data.firstname}
                     />
                     <div className="data-modif-btns">
-                        <button
-                            className="data-modif-btn hvr-grow"
+                        <Button
+                            className=""
                             onClick={() => changeData("firstname")}
                         >
                             Modifier
-                        </button>
-                        <button
-                            className="data-modif-btn hvr-grow"
+                        </Button>
+                        <Button
+                            className=""
+                            danger
                             onClick={() => handleIsModify("firstname")}
                         >
                             Annuler
-                        </button>
+                        </Button>
                     </div>
                 </div>
             )}
@@ -208,24 +246,25 @@ export default function MyAccount({ data }) {
                 </div>
             ) : (
                 <div className="data-container data">
-                    <input
+                    <Input
                         type="texte"
                         onChange={handleLastname}
                         placeholder={data.lastname}
                     />
                     <div className="data-modif-btns">
-                        <button
-                            className="data-modif-btn hvr-grow"
+                        <Button
+                            className=""
                             onClick={() => changeData("lastname")}
                         >
                             Modifier
-                        </button>
-                        <button
-                            className="data-modif-btn hvr-grow"
+                        </Button>
+                        <Button
+                            className=""
+                            danger
                             onClick={() => handleIsModify("lastname")}
                         >
                             Annuler
-                        </button>
+                        </Button>
                     </div>
                 </div>
             )}
@@ -242,24 +281,25 @@ export default function MyAccount({ data }) {
                 </div>
             ) : (
                 <div className="data-container data">
-                    <input
+                    <Input
                         type="texte"
                         onChange={handleEmail}
                         placeholder={data.email}
                     />
                     <div className="data-modif-btns">
-                        <button
-                            className="data-modif-btn hvr-grow"
+                        <Button
+                            className=""
                             onClick={() => changeData("email")}
                         >
                             Modifier
-                        </button>
-                        <button
-                            className="data-modif-btn hvr-grow"
+                        </Button>
+                        <Button
+                            className=""
+                            danger
                             onClick={() => handleIsModify("email")}
                         >
                             Annuler
-                        </button>
+                        </Button>
                     </div>
                 </div>
             )}
