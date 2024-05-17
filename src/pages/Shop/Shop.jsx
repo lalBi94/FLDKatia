@@ -492,6 +492,8 @@ export default function Shop() {
                             &lt;
                         </Button>
 
+                        <span id="current-page">{current}</span>
+
                         <Button
                             disabled={lockdown}
                             className=""

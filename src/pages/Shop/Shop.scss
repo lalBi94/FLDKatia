@@ -7,6 +7,17 @@
     flex-direction: column;
     overflow-x: clip;
 
+    #current-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: $pastel_yellow;
+        box-shadow: 0px 0px 3px 2px $pastel_orange;
+        border-radius: 50px;
+        width: 30px;
+        height: 30px;
+    }
+
     #advenced-search-container {
         display: flex;
         flex-direction: row;
