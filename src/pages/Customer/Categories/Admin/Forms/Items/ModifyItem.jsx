@@ -17,6 +17,22 @@ export default function ModifyItem({ handleClose }) {
     const [modifyImgRef, setModifyImgRef] = useState("");
     const [notif, contextNotif] = notification.useNotification();
 
+    const handleSearch = async (e) => {
+        const str = e.target.value;
+
+        if (str.length === 0) {
+            showItems();
+            return;
+        }
+
+        const items = await getItems();
+        const toDisplay = items.filter((e) =>
+            e.name.toLowerCase().includes(str.toLowerCase())
+        );
+
+        setShowedItems(toDisplay);
+    };
+
     /**
      * Nom du produit
      * @param {Event} e
@@ -127,6 +143,12 @@ export default function ModifyItem({ handleClose }) {
     return (
         <div className="popup-container">
             {contextNotif}
+
+            <Input
+                onChange={handleSearch}
+                type="text"
+                placeholder="Rechercher un produit"
+            />
 
             <span className="popup-title">Modifier un Produit</span>
 

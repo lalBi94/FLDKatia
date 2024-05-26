@@ -13,7 +13,7 @@ export default function ShowReservation({ handleClose }) {
     const [reservations, setReservations] = useState([]);
     const [notif, notifContext] = notification.useNotification();
 
-    useEffect(() => {
+    const getUsers = () => {
         const toSend = JSON.stringify({
             token: localStorage.getItem("katiacm"),
         });
@@ -23,7 +23,30 @@ export default function ShowReservation({ handleClose }) {
                 setUsers(res.data);
             }
         );
+    };
+
+    useEffect(() => {
+        getUsers();
     }, []);
+
+    const handleSearch = async (e) => {
+        const str = e.target.value;
+
+        if (str.length === 0) {
+            getUsers();
+            return;
+        }
+
+        const toDisplay = users.filter(
+            (e) =>
+                e.firstname.toLowerCase().includes(str.toLowerCase()) ||
+                e._id.toLowerCase().includes(str.toLowerCase()) ||
+                e.lastname.toLowerCase().includes(str.toLowerCase()) ||
+                e.email.toLowerCase().includes(str.toLowerCase())
+        );
+
+        setUsers(toDisplay);
+    };
 
     /**
      * Ouvrir la Notif
@@ -286,6 +309,13 @@ export default function ShowReservation({ handleClose }) {
     return users.length > 0 ? (
         <div className="popup-container">
             {notifContext}
+
+            <Input
+                onChange={handleSearch}
+                type="text"
+                placeholder="Rechercher un ID, une adresse mail, un prenom/nom"
+            />
+
             <div className="popup-list-w-actions">
                 {users.length > 0
                     ? Object.keys(users).map((v, k) => (
@@ -304,9 +334,15 @@ export default function ShowReservation({ handleClose }) {
                                   {users[v].firstname} {users[v].lastname}
                               </span>
 
-                              <span className="popup-list-data-lower">
+                              <Tag
+                                  color={
+                                      selectedUser._id === users[v]._id
+                                          ? ""
+                                          : "#2b2b2b"
+                                  }
+                              >
                                   #{users[v]._id}
-                              </span>
+                              </Tag>
                           </div>
                       ))
                     : null}
