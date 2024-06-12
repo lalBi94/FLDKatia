@@ -7,10 +7,6 @@
     "url": "https://github.com/lalBi94/FLDKatia/tree/master",
     "type": "git"
   },
-  "engines": {
-    "node": "20.9.0",
-    "npm": "10.1.0"
-  },
   "keywords": [
     "lesdelicesdekatia",
     "les délices de katia",
